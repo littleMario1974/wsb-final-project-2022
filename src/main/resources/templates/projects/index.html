@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projekty</title>
+</head>
+<body>
+<h1>
+    Projekty
+</h1>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <td>
+                Kod
+            </td>
+            <td>
+                Nazwa
+            </td>
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr th:each="project: ${projects}">
+            <td th:text="${project.code}"/>
+            <td th:text="${project.name}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
