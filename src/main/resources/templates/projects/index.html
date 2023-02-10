@@ -38,7 +38,9 @@
             <td>
                 Edycja
             </td>
-
+            <td>
+                Usuwanie
+            </td>
 
         </tr>
 
@@ -53,7 +55,12 @@
                 </a>
 
             </td>
+            <td>
+                <a th:href="@{'/projects/delete/' + ${project.id}}" class="btn btn-secondary">
+                    Usuń
+                </a>
 
+            </td>
 
         </tr>
         </tbody>
