@@ -70,4 +70,24 @@ public class ProjectController {
             return "redirect:/projects/edit/" + project.getId();
         }
     }
+    @GetMapping("/delete/{id}")
+    ModelAndView delete(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("projects/delete");
+
+        Project project = projectRepository.findById(id).orElse(null);
+        modelAndView.addObject("project", project);
+
+        return modelAndView;
+    }
+
+    @PostMapping("/delete")
+    String delete(@ModelAttribute Project project) {
+        //boolean isNew = project.getId() == null;
+
+        projectRepository.deleteById(project.getId());
+
+        return "redirect:/projects";
+
+
+    }
 }
