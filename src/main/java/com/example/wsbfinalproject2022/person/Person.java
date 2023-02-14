@@ -1,8 +1,10 @@
 package com.example.wsbfinalproject2022.person;
 
+import com.example.wsbfinalproject2022.authorities.Authority;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Person {
@@ -20,6 +22,21 @@ public class Person {
     private Boolean enabled;
 
     private Date dateCreated;
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "person_authorities",
+    joinColumns = @JoinColumn(name = "person_id"),
+    inverseJoinColumns = @JoinColumn(name = "authority_id"))
+    Set<Authority> authorities;
+
 
     public Person() {
     }
