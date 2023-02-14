@@ -1,8 +1,11 @@
 package com.example.wsbfinalproject2022.person;
 
+import com.example.wsbfinalproject2022.authorities.Authority;
+import com.example.wsbfinalproject2022.authorities.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,9 +17,12 @@ public class PersonController {
 
     private final PersonRepository personRepository;
 
+    private final AuthorityRepository authorityRepository;
+
     @Autowired
-    public PersonController(PersonRepository personRepository) {
+    public PersonController(PersonRepository personRepository, AuthorityRepository authorityRepository) {
         this.personRepository = personRepository;
+        this.authorityRepository = authorityRepository;
     }
 
     @GetMapping("/")
@@ -57,5 +63,28 @@ public class PersonController {
     public Iterable<Person> listCreatedAfter(@RequestParam String dateString) throws ParseException {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
         return personRepository.findAllByDateCreatedAfter(date);
+    }
+    @GetMapping("/authorities")
+    public Iterable<Authority> getAuthorities(@RequestParam String username) {
+        return authorityRepository.findAllByUsername(username);
+    }
+
+    @PostMapping("{username}/authorities")
+    public Person addAuthority(@PathVariable String username, @RequestParam String authority) {
+        Optional<Person> optionalPerson = personRepository.findByUsername(username);
+
+        if (optionalPerson.isEmpty()) {
+            throw new InvalidParameterException("Nie znaleziono użytkownika.");
+        }
+        Optional<Authority> optionalAuthorityInstance=authorityRepository.findByAuthority(authority);
+        if (optionalAuthorityInstance.isEmpty()) {
+            throw new InvalidParameterException("Nie znaleziono uprawnienia.");
+        }
+
+        Person person = optionalPerson.get();
+        person.authorities.add(optionalAuthorityInstance.get());
+        personRepository.save(person);
+
+        return person;
     }
 }
