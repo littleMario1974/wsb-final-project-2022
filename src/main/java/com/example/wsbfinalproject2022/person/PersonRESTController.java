@@ -12,15 +12,15 @@ import java.util.Date;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/people")
-public class PersonController {
+@RequestMapping("/api/people")
+public class PersonRESTController {
 
     private final PersonRepository personRepository;
 
     private final AuthorityRepository authorityRepository;
 
     @Autowired
-    public PersonController(PersonRepository personRepository, AuthorityRepository authorityRepository) {
+    public PersonRESTController(PersonRepository personRepository, AuthorityRepository authorityRepository) {
         this.personRepository = personRepository;
         this.authorityRepository = authorityRepository;
     }
