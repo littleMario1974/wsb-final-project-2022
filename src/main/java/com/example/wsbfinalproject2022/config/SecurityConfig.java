@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,18 +28,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .requestMatchers("/contact").permitAll()
+                .requestMatchers("/contact", "/css/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll();
 
         return httpSecurity.build();
-    }
-
-    protected void configure(WebSecurity webSecurity) {
-        webSecurity.ignoring().requestMatchers("/css");
-
-
     }
 
     @Bean
@@ -54,16 +47,19 @@ public class SecurityConfig {
         return provider;
     }
 
+/* poniższy kod umożliwia uruchomienie tymczasowego użytkownika na wypadek problemów z logowaniem
 
-    /*@Bean
+    @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         UserDetails user = User.withUsername("wsb")
-                .password(encoder.encode("secret"))
+                .password(encoder.encode("123"))
                 .roles("USER")
                 .build();
         return new InMemoryUserDetailsManager(user);
 
-    }*/
+    }
+
+ */
 
 }
