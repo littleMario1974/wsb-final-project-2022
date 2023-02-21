@@ -25,11 +25,11 @@ public class PersonService {
     }
 
     public void prepareAdminUser() {
-        if (personRepository.findByUsername("admin").isPresent()) {
+        if (personRepository.findByUsername("user4").isPresent()) {
             return;
         }
 
-        Person person = new Person ("admin", "1234", true);
+        Person person = new Person ("user4", "1234", true);
 
         person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
 
