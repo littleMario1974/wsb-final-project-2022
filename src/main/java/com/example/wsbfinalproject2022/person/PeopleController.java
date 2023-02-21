@@ -21,7 +21,7 @@ public class PeopleController {
     }
 
     @GetMapping("/")
-    @Secured("ROLE_USERS_TAB")
+    @Secured("ROLE_USER_TAB")
     ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("people/index");
         modelAndView.addObject("people", personRepository.findAll());
@@ -29,7 +29,7 @@ public class PeopleController {
     }
 
     @GetMapping("/create")
-    @Secured("ROLE_CREATE_USER")
+    @Secured("ROLE_MANAGE_USERS")
     ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("people/create");
         modelAndView.addObject("person", new Person());
@@ -37,7 +37,7 @@ public class PeopleController {
     }
 
     @PostMapping("/save")
-    @Secured("ROLE_CREATE_USER")
+    @Secured("ROLE_MANAGE_USERS")
     ModelAndView save(@ModelAttribute Person person) {
 
         personService.savePerson(person);
