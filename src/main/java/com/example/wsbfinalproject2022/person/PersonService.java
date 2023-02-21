@@ -2,6 +2,7 @@ package com.example.wsbfinalproject2022.person;
 
 import com.example.wsbfinalproject2022.authorities.Authority;
 import com.example.wsbfinalproject2022.authorities.AuthorityRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -13,20 +14,34 @@ public class PersonService {
     private final AuthorityRepository authorityRepository;
     private final PersonRepository personRepository;
 
-    public PersonService(AuthorityRepository authorityRepository, PersonRepository personRepository) {
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public PersonService(AuthorityRepository authorityRepository,
+                         PersonRepository personRepository,
+                         BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.authorityRepository = authorityRepository;
         this.personRepository = personRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public void prepareAdminUser() {
-        if (personRepository.findByUsername("admin").isPresent()) {
+        if (personRepository.findByUsername("user4").isPresent()) {
             return;
         }
 
-        Person person = new Person ("admin", "1234", true);
+        Person person = new Person ("user4", "1234", true);
+
+        person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
 
         List<Authority> authorities = (List<Authority>) authorityRepository.findAll();
         person.setAuthorities(new HashSet<>(authorities));
+
+        personRepository.save(person);
+    }
+
+    protected void savePerson(Person person) {
+        String hashedPassword = bCryptPasswordEncoder.encode(person.getPassword());
+        person.setPassword(hashedPassword);
 
         personRepository.save(person);
     }
