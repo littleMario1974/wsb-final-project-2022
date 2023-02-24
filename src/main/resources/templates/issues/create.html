@@ -63,11 +63,11 @@
         </div>
 
         <div class="mb-3">
-            <label for="demo" class="form-label">
+            <label for="select1" class="form-label">
                 TYP
             </label>
 
-            <select name="demo" id="demo" class="form-control" th:field="*{type}">
+            <select name="select1" id="select1" class="form-control" th:field="*{type}">
 
                 <option th:each="issueType : ${T(com.example.wsbfinalproject2022.issues.IssueType).values()}"
                         th:value="${issueType}"
@@ -76,9 +76,68 @@
             </select>
         </div>
 
+        <div class="mb-3">
+            <label for="select2" class="form-label">
+                PRIORYTET
+            </label>
+
+            <select name="select2" id="select2" class="form-control" th:field="*{priority}">
+
+                <option th:each="priority : ${T(com.example.wsbfinalproject2022.issues.Priority).values()}"
+                        th:value="${priority}"
+                        th:text="${priority}"></option>
+
+            </select>
+        </div>
+
+
+        <label for="select3" class="form-label">
+            STATUS
+        </label>
+
+        <select name="select3" id="select3" class="form-control" th:field="*{status}">
+
+            <option th:each="status : ${T(com.example.wsbfinalproject2022.issues.Status).values()}"
+                    th:value="${status}"
+                    th:text="${status}"></option>
+
+        </select>
+
+
+        <label for="issue-description" class="form-label">
+            Opis
+        </label>
+
+        <textarea class="form-control" id="issue-description" rows="7" th:field="*{description}"></textarea>
+
+
+        <div class="mb-3">
+            <label for="project" class="form-label">
+                Wykonawca
+            </label>
+
+            <select id="assignee"
+                    class="form-control"
+                    th:field="*{assignee}">
+                <option th:value="null"></option>
+                <option th:each="person : ${person}"
+                        th:value="${person.id}"
+                        th:text="${person.username}">
+
+
+                </option>
+
+            </select>
+        </div>
+
+
         <button type="submit" class="btn btn-primary">
             Zapisz
         </button>
+
+        <a th:href="@{/projects}" class="btn btn-secondary">
+            Anuluj
+        </a>
 
     </form>
 

@@ -1,5 +1,6 @@
 package com.example.wsbfinalproject2022.projects;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,7 +15,7 @@ public class ProjectController {
         this.projectRepository = projectRepository;
     }
 
-    // todo: @Secured("ROLE_PROJECTS_TAB")
+    @Secured("ROLE_MANAGE_PROJECT")
     @GetMapping
     ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("projects/index");
