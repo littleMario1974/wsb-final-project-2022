@@ -44,7 +44,7 @@ public class Issue {
     @JoinColumn(name = "assignee_id")
     private Person assignee;
 
-    @ManyToOne (optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
