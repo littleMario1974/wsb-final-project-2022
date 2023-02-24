@@ -90,26 +90,46 @@
             </select>
         </div>
 
+
+        <label for="select3" class="form-label">
+            STATUS
+        </label>
+
+        <select name="select3" id="select3" class="form-control" th:field="*{status}">
+
+            <option th:each="status : ${T(com.example.wsbfinalproject2022.issues.Status).values()}"
+                    th:value="${status}"
+                    th:text="${status}"></option>
+
+        </select>
+
+
+        <label for="issue-description" class="form-label">
+            Opis
+        </label>
+
+        <textarea class="form-control" id="issue-description" rows="7" th:field="*{description}"></textarea>
+
+
         <div class="mb-3">
-            <label for="select3" class="form-label">
-                STATUS
+            <label for="project" class="form-label">
+                Wykonawca
             </label>
 
-            <select name="select3" id="select3" class="form-control" th:field="*{status}">
+            <select id="assignee"
+                    class="form-control"
+                    th:field="*{assignee}">
+                <option th:value="null"></option>
+                <option th:each="person : ${person}"
+                        th:value="${person.id}"
+                        th:text="${person.username}">
 
-                <option th:each="status : ${T(com.example.wsbfinalproject2022.issues.Status).values()}"
-                        th:value="${status}"
-                        th:text="${status}"></option>
+
+                </option>
 
             </select>
         </div>
-        <div class="mb-3">
-            <label for="issue-description" class="form-label">
-                Opis
-            </label>
 
-            <textarea class="form-control" id="issue-description" rows="7" th:field="*{description}"></textarea>
-        </div>
 
         <button type="submit" class="btn btn-primary">
             Zapisz
