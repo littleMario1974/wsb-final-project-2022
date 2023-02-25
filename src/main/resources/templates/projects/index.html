@@ -16,10 +16,7 @@
 
 <div class="container">
 
-    <h1>
-        Projekty
-
-    </h1>
+    <h1 th:text="#{projects.index}"></h1>
 
     <div>
         <a th:href="@{/projects/create}" class="btn btn-secondary">
@@ -27,6 +24,8 @@
         </a>
 
     </div>
+
+
 
     <table class="table">
         <thead>
@@ -36,6 +35,10 @@
             </td>
             <td>
                 Nazwa
+            </td>
+
+            <td>
+                Opis
             </td>
 
             <td>
@@ -49,9 +52,15 @@
 
         </thead>
         <tbody>
+
+
+
         <tr th:each="project: ${projects}">
             <td th:text="${project.code}"/>
             <td th:text="${project.name}"/>
+
+
+            <td th:text="${project.description}"/>
             <td>
                 <a th:href="@{'/projects/edit/' + ${project.id}}" class="btn btn-secondary">
                     Edytuj
@@ -66,6 +75,8 @@
             </td>
 
         </tr>
+
+
         </tbody>
     </table>
 </div>

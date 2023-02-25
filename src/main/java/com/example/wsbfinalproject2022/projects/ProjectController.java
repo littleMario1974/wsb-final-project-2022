@@ -1,34 +1,34 @@
 package com.example.wsbfinalproject2022.projects;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/projects")
+@RequiredArgsConstructor
 public class ProjectController {
 
     private final ProjectRepository projectRepository;
     private final ProjectService projectService;
 
-    public ProjectController(ProjectRepository projectRepository, ProjectService projectService) {
-        this.projectRepository = projectRepository;
-        this.projectService = projectService;
-
-    }
-
     @Secured("ROLE_MANAGE_PROJECT")
     @GetMapping
     ModelAndView index() {
+
+        List<Project> projects = projectService.findAllEnabled();
+
         ModelAndView modelAndView = new ModelAndView("projects/index");
+        modelAndView.addObject("projects", projects);
 
-        modelAndView.addObject("projects", projectRepository.findAll());
         return modelAndView;
-
     }
+
 
     @GetMapping("/create")
     ModelAndView create() {
@@ -70,20 +70,7 @@ public class ProjectController {
         return "redirect:/projects";
     }
 
-    /*@PostMapping("/save")
-    String save(@ModelAttribute Project project) {
-        boolean isNew = project.getId() == null;
 
-        projectRepository.save(project);
-
-        if (isNew) {
-            return "redirect:/projects";
-        } else {
-            return "redirect:/projects/edit/" + project.getId();
-        }
-    }
-
-     */
     @GetMapping("/delete/{id}")
     ModelAndView delete(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("projects/delete");
