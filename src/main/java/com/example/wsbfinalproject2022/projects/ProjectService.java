@@ -7,13 +7,24 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
 
-    final ProjectRepository projectRepository;
+
     final PersonRepository personRepository;
+    final ProjectRepository projectRepository;
+
+    public List<Project> findAll() {
+        return projectRepository.findAll();
+    }
+
+    public List<Project> findAllEnabled(){
+        return projectRepository.findByEnabledNative(true);
+    }
+
 
     public Project save (Project project, String creatorName){
         if (project.getId() == null) // to można wyrzucić
@@ -22,4 +33,5 @@ public class ProjectService {
         project.setCreator(creator);
         return projectRepository.save(project);
     }
+
 }
