@@ -17,16 +17,16 @@ public class ProjectService {
     final PersonRepository personRepository;
     final ProjectRepository projectRepository;
 
-    public List<Project> findAll() {
-        return projectRepository.findAll();
+    public List<Project> findAll(ProjectFilter filter) {
+        return projectRepository.findAll(filter.buildQuery());
     }
 
-    public List<Project> findAllEnabled(){
+    public List<Project> findAllEnabled() {
         return projectRepository.findAllByEnabled(true);
     }
 
 
-    public Project save (Project project, String creatorName){
+    public Project save(Project project, String creatorName) {
         if (project.getId() == null) // to można wyrzucić
             project.setDateCreated(Date.from(Instant.now()));
         Person creator = personRepository.findByUsername(creatorName).orElseThrow();
