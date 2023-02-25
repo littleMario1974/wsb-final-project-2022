@@ -1,14 +1,11 @@
 package com.example.wsbfinalproject2022.person;
 
-import com.example.wsbfinalproject2022.authorities.Authority;
 import com.example.wsbfinalproject2022.authorities.AuthorityRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 public class PersonService {
@@ -25,12 +22,12 @@ public class PersonService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public void prepareAdminUser() {
-        if (personRepository.findByUsername("user4").isPresent()) {
+    /*public void prepareAdminUser() {
+        if (personRepository.findByUsername("admin").isPresent()) {
             return;
         }
 
-        Person person = new Person ("user4", "1234", true);
+        Person person = new Person ("admin", "1234", true, "admin@gmail.com");
 
         person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
 
@@ -38,7 +35,7 @@ public class PersonService {
         person.setAuthorities(new HashSet<>(authorities));
 
         personRepository.save(person);
-    }
+    }*/
 
     protected void savePerson(Person person) {
         String hashedPassword = bCryptPasswordEncoder.encode(person.getPassword());
