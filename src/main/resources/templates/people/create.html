@@ -44,12 +44,39 @@
             </div>
 
             <div>
-                <input type="password"
+                <input type="text"
                        id="password"
                        th:field="*{password}"
                        class="form-control">
             </div>
         </div>
+
+
+
+
+        <fieldset>
+            <legend>Wybierz uprawnienia:</legend>
+            <input type="checkbox" value="1" th:field="*{authorities}" /> ROLE_MANAGE_PROJECT<br>
+            <input type="checkbox" value="2" th:field="*{authorities}" /> ROLE_MANAGE_COMMENTS<br>
+            <input type="checkbox" value="3" th:field="*{authorities}" /> ROLE_USER_TAB<br>
+            <input type="checkbox" value="4" th:field="*{authorities}" /> ROLE_MANAGE_USERS<br>
+        </fieldset>
+
+        <script>
+            var f = document.getElementsByName('authority');
+            var v ='';
+            for(var i = 0; i < f.length; i++){
+                if(f[i].checked){
+                    v = v+' '+ f[i].value;
+                }
+            }
+            if (v=='') {v="Nie dokonałeś żadnego wyboru.";}
+            alert(v);
+        </script>
+
+
+
+
 
         <div>
             <button class="btn btn-primary mt-4" type="submit">ZAPISZ!</button>

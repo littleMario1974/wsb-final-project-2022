@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Entity
 public class Person {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
@@ -19,9 +20,14 @@ public class Person {
     @Column(length = 100)
     private String password;
 
+
+    private String userRealName;
+
     private Boolean enabled;
 
     private Date dateCreated;
+
+    private String email;
 
     public Set<Authority> getAuthorities() {
         return authorities;
@@ -41,11 +47,15 @@ public class Person {
     public Person() {
     }
 
-    public Person(String username, String password, Boolean enabled) {
+
+
+    public Person(String username, String password, String userRealName, Boolean enabled, String email) {
         this.username = username;
         this.password = password;
+        this.userRealName = userRealName;
         this.enabled = enabled;
         this.dateCreated = new Date();
+        this.email = email;
     }
 
     public String getUsername() {
@@ -62,6 +72,14 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserRealName() {
+        return userRealName;
+    }
+
+    public void setUserRealName(String userRealName) {
+        this.userRealName = userRealName;
     }
 
     public Boolean getEnabled() {
@@ -86,5 +104,13 @@ public class Person {
 
     public Long getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

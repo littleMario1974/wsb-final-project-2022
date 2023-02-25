@@ -37,8 +37,10 @@ public class PersonRESTController {
 
     @PostMapping("/")
     public Person save(@RequestParam String username,
-                       @RequestParam String password) {
-        Person person = new Person(username, password, true);
+                       @RequestParam String password,
+                       @RequestParam String userRealName,
+                       @RequestParam String email) {
+        Person person = new Person(username, password, userRealName, true, email);
         return personRepository.save(person);
 
     }

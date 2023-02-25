@@ -32,7 +32,7 @@ public class Bootstrap implements InitializingBean {
             }
 
         }
-
-        personService.prepareAdminUser();
+// zapisanie AdminUser z pełnymi uprawnieniami - wywołanie metody z PersonService
+        //personService.prepareAdminUser();
     }
 }
