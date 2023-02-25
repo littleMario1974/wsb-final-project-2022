@@ -19,12 +19,13 @@ public class ProjectController {
 
     @Secured("ROLE_MANAGE_PROJECT")
     @GetMapping
-    ModelAndView index() {
+    ModelAndView index(@ModelAttribute ProjectFilter filter) {
 
-        List<Project> projects = projectService.findAllEnabled();
+        List<Project> projects = projectService.findAll(filter);
 
         ModelAndView modelAndView = new ModelAndView("projects/index");
         modelAndView.addObject("projects", projects);
+        modelAndView.addObject("filter", filter);
 
         return modelAndView;
     }
