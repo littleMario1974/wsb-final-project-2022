@@ -33,7 +33,7 @@ public class Issue {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false) //unique = true)
     private String code;
 
     @ManyToOne
