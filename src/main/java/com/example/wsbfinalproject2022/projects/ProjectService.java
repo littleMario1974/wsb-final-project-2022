@@ -22,7 +22,7 @@ public class ProjectService {
     }
 
     public List<Project> findAllEnabled(){
-        return projectRepository.findByEnabledNative(true);
+        return projectRepository.findAllByEnabled(true);
     }
 
 
