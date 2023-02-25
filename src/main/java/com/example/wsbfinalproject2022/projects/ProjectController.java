@@ -5,14 +5,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectRepository projectRepository;
+    private final ProjectService projectService;
 
-    public ProjectController(ProjectRepository projectRepository) {
+    public ProjectController(ProjectRepository projectRepository, ProjectService projectService) {
         this.projectRepository = projectRepository;
+        this.projectService = projectService;
+
     }
 
     @Secured("ROLE_MANAGE_PROJECT")
@@ -60,6 +65,12 @@ public class ProjectController {
      */
 
     @PostMapping("/save")
+    String save(@ModelAttribute Project project, Principal principal) {
+        projectService.save(project, principal.getName());
+        return "redirect:/projects";
+    }
+
+    /*@PostMapping("/save")
     String save(@ModelAttribute Project project) {
         boolean isNew = project.getId() == null;
 
@@ -71,6 +82,8 @@ public class ProjectController {
             return "redirect:/projects/edit/" + project.getId();
         }
     }
+
+     */
     @GetMapping("/delete/{id}")
     ModelAndView delete(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("projects/delete");
