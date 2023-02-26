@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,15 @@ public class ProjectService {
     public List<Project> findAllEnabled() {
         return projectRepository.findAllByEnabled(true);
     }
+
+
+    public Set<Person> findAllCreators() {
+        return findAllEnabled()
+                .stream()
+                .map(Project::getCreator)
+                .collect(Collectors.toSet());
+    }
+
 
 
     public Project save(Project project, String creatorName) {
