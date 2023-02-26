@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectService {
 
-
     final PersonRepository personRepository;
     final ProjectRepository projectRepository;
 
@@ -34,8 +33,6 @@ public class ProjectService {
                 .map(Project::getCreator)
                 .collect(Collectors.toSet());
     }
-
-
 
     public Project save(Project project, String creatorName) {
         if (project.getId() == null) // to można wyrzucić
