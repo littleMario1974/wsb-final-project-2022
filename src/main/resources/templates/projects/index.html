@@ -27,7 +27,7 @@
                 <option th:value="${null}" th:text="#{projects.creator}"></option>
                 <option th:each="c : ${creators}"
                         th:value="${c.getId()}"
-                        th:text="${c.getRealName()}"></option>
+                        th:text="${c.getUserRealName()}"></option>
             </select>
         </div>
 
@@ -43,15 +43,12 @@
 
             <a th:href="@{/projects}" th:text="#{common.clear}"></a>
         </div>
-
-
+    </form>
 
     <div th:each="project : ${projects}">
         <div class="card mt-4">
 
-
             <h5 class="card-header" th:text="${project.getName()}"></h5>
-
 
             <div class="card-body">
                 <p class="card-text" th:text="${project.getDescription()}"></p>
@@ -61,17 +58,15 @@
                         Edytuj
                     </a>
 
+                </td>
+                <td>
                     <a th:href="@{'/projects/delete/' + ${project.id}}" class="btn btn-secondary">
                         Usuń
                     </a>
 
 
+
             </div>
-
-
-
-
-
 
         </div>
     </div>
