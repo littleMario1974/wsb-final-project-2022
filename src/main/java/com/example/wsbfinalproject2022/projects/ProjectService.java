@@ -5,6 +5,7 @@ import com.example.wsbfinalproject2022.person.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -34,8 +35,9 @@ public class ProjectService {
                 .collect(Collectors.toSet());
     }
 
-    public Project save(Project project, String creatorName) {
-        if (project.getId() == null) // to można wyrzucić
+    public Project save(Project project, String creatorName) throws ParseException {
+
+        if (project.getId() == null)
             project.setDateCreated(Date.from(Instant.now()));
         Person creator = personRepository.findByUsername(creatorName).orElseThrow();
         project.setCreator(creator);
