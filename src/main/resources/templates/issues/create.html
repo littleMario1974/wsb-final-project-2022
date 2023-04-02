@@ -22,10 +22,14 @@
     </h1>
 
     <form th:action="@{/issues/save}" th:object="${issue}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{dateCreated}">
+        <input th:if="${issue.id != null}" type="hidden" th:field="*{project.id}">
 
-        <div class="mb-3">
+
+        <div th:if="${issue.id == null}" class="mb-3">
             <label for="project" class="form-label">
-                PROJEKT
+                Projekt
             </label>
 
             <select id="project"
@@ -135,7 +139,7 @@
             Zapisz
         </button>
 
-        <a th:href="@{/projects}" class="btn btn-secondary">
+        <a th:href="@{/issues}" class="btn btn-secondary">
             Anuluj
         </a>
 

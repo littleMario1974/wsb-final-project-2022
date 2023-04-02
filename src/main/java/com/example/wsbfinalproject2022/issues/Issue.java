@@ -4,6 +4,7 @@ import com.example.wsbfinalproject2022.person.Person;
 import com.example.wsbfinalproject2022.projects.Project;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -49,9 +50,11 @@ public class Issue {
     private Project project;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss[.SSS][.SS]")
     private Date dateCreated;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss[.SSS][.SS]")
     private Date lastUpdated;
 
     @Column(nullable = false)

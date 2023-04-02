@@ -51,9 +51,35 @@
             </div>
         </div>
 
+        <div class="row">
+            <div>
+                <label for="userRealName">
+                    Nazwisko i Imię
+                </label>
+            </div>
 
+            <div>
+                <input type="text"
+                       id="userRealName"
+                       th:field="*{userRealName}"
+                       class="form-control">
+            </div>
+        </div>
 
+        <div class="row">
+            <div>
+                <label for="email">
+                    E-mail
+                </label>
+            </div>
 
+            <div>
+                <input type="text"
+                       id="email"
+                       th:field="*{email}"
+                       class="form-control">
+            </div>
+        </div>
         <fieldset>
             <legend>Wybierz uprawnienia:</legend>
             <input type="checkbox" value="1" th:field="*{authorities}" /> ROLE_MANAGE_PROJECT<br>
@@ -62,17 +88,7 @@
             <input type="checkbox" value="4" th:field="*{authorities}" /> ROLE_MANAGE_USERS<br>
         </fieldset>
 
-        <script>
-            var f = document.getElementsByName('authority');
-            var v ='';
-            for(var i = 0; i < f.length; i++){
-                if(f[i].checked){
-                    v = v+' '+ f[i].value;
-                }
-            }
-            if (v=='') {v="Nie dokonałeś żadnego wyboru.";}
-            alert(v);
-        </script>
+
 
 
 
@@ -80,6 +96,18 @@
 
         <div>
             <button class="btn btn-primary mt-4" type="submit">ZAPISZ!</button>
+
+            <script>
+                var f = document.getElementsByName('authority');
+                var v ='';
+                for(var i = 0; i < f.length; i++){
+                    if(f[i].checked){
+                        v = v+' '+ f[i].value;
+                    }
+                }
+                if (v=='') {v="Nie dokonałeś żadnego wyboru.";}
+                alert(v);
+            </script>
         </div>
     </form>
 </section>

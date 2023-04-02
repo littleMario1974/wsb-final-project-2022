@@ -3,6 +3,7 @@ package com.example.wsbfinalproject2022.projects;
 import com.example.wsbfinalproject2022.person.Person;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -26,6 +27,7 @@ public class Project {
     private Boolean enabled = true;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss[.SSS][.SS]")
     private Date dateCreated;
 
     @ManyToOne
