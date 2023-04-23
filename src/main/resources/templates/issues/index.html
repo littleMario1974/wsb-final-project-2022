@@ -31,12 +31,13 @@
                     class="form-control">
 
                 <option th:value="${null}" th:text="#{issues.assignee}"></option>
+                <option th:value="${null}" th:text="#{not.assigned}"></option>
+
                 <option th:each="c : ${assignees}"
                         th:value="${c.getId()}"
                         th:text="${c.username}"></option>
             </select>
         </div>
-
 
         <div class="col">
             <select th:field="*{status}"
@@ -44,8 +45,8 @@
 
                 <option th:value="${null}" th:text="#{issues.status}"></option>
                 <option th:each="c : ${statuses}"
-                        th:value="${c.getDeclaringClass()}"
-                        th:text="${c.toString()}"></option>
+                        th:value="${c}"
+                        th:text="#{${c}}"></option>
             </select>
         </div>
 
@@ -67,9 +68,10 @@
 
     <div th:each="issue : ${issues}">
         <div class="card mt-4">
-
             <h5 class="card-header" th:text="#{issues.name} + ': ' + ${issue.getName()}"></h5>
-            <h7 class="card-header" th:text="#{issues.assignee} + ': ' + ${issue.assignee.getUsername()}"></h7>
+
+            <h7 class="card-header" th:if="${issue.assignee != null}" th:text="#{issues.assignee} + ': ' + ${issue.assignee.getUsername()} + ', ' + #{project} + ': ' + ${issue.project.name}"></h7>
+            <h7 class="card-header" th:if="${issue.assignee == null}" th:text="'Wykonawca nieprzypisany'"></h7>
             <div class="card-body">
                 <p class="card-text" th:text="${issue.getDescription()}"></p>
 
@@ -90,6 +92,16 @@
 
         </div>
     </div>
+
+   <div class="row">
+       <ul class="pagination">
+         <li th:each="pageNumber : ${#numbers.sequence(0, issues.getTotalPages() - 1)}">
+                <a th:href="@{'/issues?page=' + ${pageNumber}}"
+                th:text="${pageNumber +1}"
+                class="page-link"></a>
+         </li>
+       </ul>
+   </div>
 
 </div>
 </body>
