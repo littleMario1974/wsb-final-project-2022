@@ -7,6 +7,8 @@ import com.example.wsbfinalproject2022.projects.ProjectFilter;
 import com.example.wsbfinalproject2022.projects.ProjectRepository;
 import com.example.wsbfinalproject2022.projects.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -36,16 +38,16 @@ public class IssueController {
     }
 
     @GetMapping
-    ModelAndView index(@ModelAttribute IssueFilter issueFilter, ProjectFilter projectFilter) {
+    ModelAndView index(@ModelAttribute IssueFilter issueFilter, ProjectFilter projectFilter, Pageable pageable) {
 
-        List<Issue> issues = issueService.findAll(issueFilter);
+        Page<Issue> issues = issueService.findAll(issueFilter, pageable);
         List<Project> projects = projectsService.findAll(projectFilter);
 
         ModelAndView modelAndView = new ModelAndView("issues/index");
-        modelAndView.addObject("projects", projects);
-        modelAndView.addObject("issues", issues);
+        modelAndView.addObject("projects", projects);// wyświetla w liście rozwijanej index.html wszystkie projekty
+        modelAndView.addObject("issues", issues);// wyświetla wszyskie zadania
         modelAndView.addObject("filter", issueFilter);
-        modelAndView.addObject("assignees", issueService.findAllAssignees());
+        modelAndView.addObject("assignees", issueService.findAllAssignees());// wyświetla w liście rozwijanej index.html wszystkich wykonawców
         modelAndView.addObject("statuses", issueService.findAllStatuses());
         modelAndView.addObject("project_id", issueService.findAllProjectId());
 
