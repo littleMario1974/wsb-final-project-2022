@@ -2,35 +2,69 @@ package com.example.wsbfinalproject2022.issues;
 
 import com.example.wsbfinalproject2022.person.Person;
 import com.example.wsbfinalproject2022.person.PersonRepository;
+import com.example.wsbfinalproject2022.projects.Project;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
 public class IssueService {
 
+
+    // public Boolean notAssigned = false;
+
     final IssueRepository issueRepository;
     final PersonRepository personRepository;
 
-    public List<Issue> findAll(IssueFilter filter) {
-        return issueRepository.findAll(filter.buildQuery());
+    public Page<Issue> findAll(IssueFilter filter, Pageable pageable) {
+        return issueRepository.findAll(filter.buildQuery(), pageable);
 
     }
+
     public List<Issue> findAllEnabled() {
         return issueRepository.findAllByEnabled(true);
     }
 
-    public Set<Person> findAllCreators() {
+    public Set<Project> findAllProjects() {
         return findAllEnabled()
                 .stream()
-                .map(Issue::getCreator)
+                .map(Issue::getProject)
                 .collect(Collectors.toSet());
+    }
+
+    public Set<Person> findAllAssignees() {
+        Set<Person> set = new HashSet<>();
+        for (Issue issue : findAllEnabled()) {
+            Person assignee = issue.getAssignee();
+            //if (assignee != null) {
+                set.add(assignee);
+            }
+            // else
+            //{
+            //notAssigned = true;
+            //}
+
+        //}
+        return set;
+    }
+
+
+    public Set<Status> findAllStatuses() {
+        return findAllEnabled()
+                .stream()
+                .map(Issue::getStatus)
+                .collect(Collectors.toSet());
+
     }
 
     public Issue save(Issue issue, String creatorName) {
@@ -41,6 +75,5 @@ public class IssueService {
         issue.setCreator(creator);
         return issueRepository.save(issue);
     }
-
 
 }
