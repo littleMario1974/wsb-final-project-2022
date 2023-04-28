@@ -30,6 +30,7 @@ public class IssueFilter {
 
         ).and(
                 Specification.allOf(
+
                         equalTo("project", project),
                         equalTo("enabled", true),
                         equalTo("assignee", assignee),
@@ -53,4 +54,13 @@ public class IssueFilter {
 
         return (root, query, builder) -> builder.like(builder.lower(root.get(property)), "%" + value.toLowerCase() + "%");
     }
+
+    public String toQueryString(Integer page) {
+        return "page=" + page +
+                (project != null ? "&project=" + project.getId() : "") +
+                (assignee != null ? "&assignee=" + assignee.getId() : "") +
+                (status != null ? "&status=" + status : "") +
+                (globalSearch != null ? "&globalSearch=" + globalSearch : "");
+    }
+
 }
