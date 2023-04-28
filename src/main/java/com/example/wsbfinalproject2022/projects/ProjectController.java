@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -67,7 +68,7 @@ public class ProjectController {
      */
 
     @PostMapping("/save")
-    String save(@ModelAttribute Project project, Principal principal) {
+    String save(@ModelAttribute Project project, Principal principal) throws ParseException {
         projectService.save(project, principal.getName());
         return "redirect:/projects";
     }
