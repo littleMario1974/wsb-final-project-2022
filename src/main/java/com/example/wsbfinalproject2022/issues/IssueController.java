@@ -2,7 +2,6 @@ package com.example.wsbfinalproject2022.issues;
 
 import com.example.wsbfinalproject2022.authorities.AuthorityRepository;
 import com.example.wsbfinalproject2022.person.PersonRepository;
-import com.example.wsbfinalproject2022.projects.Project;
 import com.example.wsbfinalproject2022.projects.ProjectFilter;
 import com.example.wsbfinalproject2022.projects.ProjectRepository;
 import com.example.wsbfinalproject2022.projects.ProjectService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/issues")
@@ -38,18 +36,16 @@ public class IssueController {
     }
 
     @GetMapping
-    ModelAndView index(@ModelAttribute IssueFilter issueFilter, ProjectFilter projectFilter, Pageable pageable) {
+    ModelAndView index(@ModelAttribute IssueFilter filter, ProjectFilter projectFilter, Pageable pageable) {
 
-        Page<Issue> issues = issueService.findAll(issueFilter, pageable);
-        List<Project> projects = projectsService.findAll(projectFilter);
+        Page<Issue> issues = issueService.findAll(filter, pageable);
 
         ModelAndView modelAndView = new ModelAndView("issues/index");
-        modelAndView.addObject("projects", projects);// wyświetla w liście rozwijanej index.html wszystkie projekty
-        modelAndView.addObject("issues", issues);// wyświetla wszyskie zadania
-        modelAndView.addObject("filter", issueFilter);
+        modelAndView.addObject("issues", issues);// wyświetla wszystkie zadania +++++++++++++
+        modelAndView.addObject("filter", filter); // ++++++++++++++++++
         modelAndView.addObject("assignees", issueService.findAllAssignees());// wyświetla w liście rozwijanej index.html wszystkich wykonawców
         modelAndView.addObject("statuses", issueService.findAllStatuses());
-        modelAndView.addObject("project_id", issueService.findAllProjectId());
+        modelAndView.addObject("projects", issueService.findAllProjects()); // przekazuje z powrotem do widoku
 
         return modelAndView;
     }
