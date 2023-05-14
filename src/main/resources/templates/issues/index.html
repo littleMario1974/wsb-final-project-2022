@@ -76,6 +76,17 @@
         </div>
     </form>
 
+    <div class="row">
+        <span th:text="#{sort.order}"></span>
+        <span th:with="sortingDir=${issues.sort.getOrderFor('name') !=null ? issues.sort.getOrderFor('name').direction.toString() : null }">
+       <a th:href="@{'/issues?' + ${filter.toQueryString(issues.number, filter.findNextSorting(issues.sort))}}">
+        <i th:if="${sortingDir == null}" class="fas fa-sort"></i>
+        <i th:if="${sortingDir == 'ASC'}" class="fas fa-sort-up"></i>
+        <i th:if="${sortingDir == 'DESC'} "class="fas fa-sort-down"></i>
+       </a>
+        </span>
+    </div>
+
     <div th:each="issue : ${issues}">
         <div class="card mt-4">
             <h5 class="card-header" th:text="#{issues.name} + ': ' + ${issue.getName()}"></h5>
@@ -108,7 +119,7 @@
 
             <li th:if="${issues.number != 0}"
                 class="page-item">
-                <a th:href="@{'/issues?' + ${filter.toQueryString(issues.number - 1)}}"
+                <a th:href="@{'/issues?' + ${filter.toQueryString(issues.number - 1, issues.sort)}}"
                    th:class="page-link">
                     <i class="fa-sharp fa-solid fa-angle-left"></i>
                 </a>
@@ -117,7 +128,7 @@
             <li th:if="${issues.getTotalPages() != 0}"
                 th:each="pageNumber : ${#numbers.sequence(T(java.lang.Math).max(issues.number - 2, 0), T(java.lang.Math).min(issues.number + 2, issues.totalPages - 1))}"
                 th:class="${'page-item ' + ((pageNumber == issues.number) ? 'active' : '')}">
-                <a th:href="@{'/issues?' + ${filter.toQueryString(pageNumber)}}"
+                <a th:href="@{'/issues?' + ${filter.toQueryString(pageNumber, issues.sort)}}"
                    th:text="${pageNumber +1}"
                    class="page-link"></a>
             </li>
@@ -125,7 +136,7 @@
             <li th:if="${issues.number != (issues.totalPages -1)}"
                 class="page-items">
                 <a th:if="${issues.getTotalPages() != 0}"
-                   th:href="@{'/issues?' + ${filter.toQueryString(issues.number + 1)}}"
+                   th:href="@{'/issues?' + ${filter.toQueryString(issues.number + 1, issues.sort)}}"
                    th:class="page-link">
                     <i class="fa-sharp fa-solid fa-angle-right"></i>
                 </a>
