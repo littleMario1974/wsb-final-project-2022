@@ -46,15 +46,8 @@ public class IssueService {
         Set<Person> set = new HashSet<>();
         for (Issue issue : findAllEnabled()) {
             Person assignee = issue.getAssignee();
-            //if (assignee != null) {
                 set.add(assignee);
             }
-            // else
-            //{
-            //notAssigned = true;
-            //}
-
-        //}
         return set;
     }
 
