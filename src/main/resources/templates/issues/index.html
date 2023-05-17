@@ -54,7 +54,7 @@
                     class="form-control">
 
                 <option th:value="${null}" th:text="#{issues.status}"></option>
-                <option th:each="c : ${statuses}" project
+                <option th:each="c : ${statuses}"
                         th:value="${c}"
                         th:text="#{${c}}"></option>
             </select>
