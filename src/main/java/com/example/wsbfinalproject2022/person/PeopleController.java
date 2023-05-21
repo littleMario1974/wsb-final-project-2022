@@ -24,7 +24,7 @@ public class PeopleController {
     @Secured("ROLE_USER_TAB")
     ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("people/index");
-        modelAndView.addObject("people", personRepository.findAll());
+        modelAndView.addObject("people", personRepository.findAllByEnabled(true));
         return modelAndView;
     }
 

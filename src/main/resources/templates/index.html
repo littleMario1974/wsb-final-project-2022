@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,7 +17,7 @@
 <body>
 <section class="container">
   <h1>
-    Bugtracker
+    Bugtracker <span sec:authentication="name"></span>
   </h1>
 
   <div>
@@ -37,12 +37,6 @@
           Użytkownicy
         </a>
       </li>
-
-
-
-
-
-
 
     </ul>
   </div>

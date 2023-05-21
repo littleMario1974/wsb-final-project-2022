@@ -2,18 +2,18 @@ package com.example.wsbfinalproject2022.issues;
 
 import com.example.wsbfinalproject2022.authorities.AuthorityRepository;
 import com.example.wsbfinalproject2022.person.PersonRepository;
-import com.example.wsbfinalproject2022.projects.Project;
 import com.example.wsbfinalproject2022.projects.ProjectFilter;
 import com.example.wsbfinalproject2022.projects.ProjectRepository;
 import com.example.wsbfinalproject2022.projects.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/issues")
@@ -36,18 +36,16 @@ public class IssueController {
     }
 
     @GetMapping
-    ModelAndView index(@ModelAttribute IssueFilter issueFilter, ProjectFilter projectFilter) {
+    ModelAndView index(@ModelAttribute IssueFilter filter, ProjectFilter projectFilter, Pageable pageable) {
 
-        List<Issue> issues = issueService.findAll(issueFilter);
-        List<Project> projects = projectsService.findAll(projectFilter);
+        Page<Issue> issues = issueService.findAll(filter, pageable);
 
         ModelAndView modelAndView = new ModelAndView("issues/index");
-        modelAndView.addObject("projects", projects);
-        modelAndView.addObject("issues", issues);
-        modelAndView.addObject("filter", issueFilter);
-        modelAndView.addObject("assignees", issueService.findAllAssignees());
+        modelAndView.addObject("issues", issues);// wyświetla wszystkie zadania +++++++++++++
+        modelAndView.addObject("filter", filter); // ++++++++++++++++++
+        modelAndView.addObject("assignees", issueService.findAllAssignees());// wyświetla w liście rozwijanej index.html wszystkich wykonawców
         modelAndView.addObject("statuses", issueService.findAllStatuses());
-        modelAndView.addObject("project_id", issueService.findAllProjectId());
+        modelAndView.addObject("projects", issueService.findAllProjects()); // przekazuje z powrotem do widoku
 
         return modelAndView;
     }
@@ -96,7 +94,6 @@ public class IssueController {
 
     @PostMapping("/delete")
     String delete(@ModelAttribute Issue issue) {
-        //boolean isNew = project.getId() == null;
 
         issueRepository.deleteById(issue.getId());
 
