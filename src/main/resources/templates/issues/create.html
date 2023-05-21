@@ -18,7 +18,8 @@
         <h2 th:text="#{new.issue}"></h2>
     </h1>
     <h1 th:if="${issue.id != null}">
-        Edycja zgłoszenia <span th:text="${issue.code}"></span>
+        <h2 th:text="#{edit.issue} + ' ' + ${issue.code}"></h2>
+
     </h1>
 
     <form th:action="@{/issues/save}" th:object="${issue}" method="post">
@@ -122,11 +123,16 @@
             <select id="assignee"
                     class="form-control"
                     th:field="*{assignee}">
-                <option th:value="null"></option>
+
                 <option th:each="person : ${person}"
                         th:value="${person.id}"
+                        th:if="${person.id != -1}"
                         th:text="${person.username}">
 
+                <option th:each="person : ${person}"
+                        th:value="${person.id}"
+                        th:if="${person.id == -1}"
+                        th:text="#{not.assigned}">
 
                 </option>
 

@@ -94,7 +94,6 @@ public class IssueController {
 
     @PostMapping("/delete")
     String delete(@ModelAttribute Issue issue) {
-        //boolean isNew = project.getId() == null;
 
         issueRepository.deleteById(issue.getId());
 

@@ -34,6 +34,7 @@ public class ProjectController {
 
 
     @GetMapping("/create")
+    @Secured("ROLE_MANAGE_PROJECT")
     ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("projects/create");
 
@@ -50,7 +51,7 @@ public class ProjectController {
      */
 
     @GetMapping("/edit/{id}")
-    // TODO: @Secured("ROLE_PROJECT_EDIT")
+    @Secured("ROLE_MANAGE_PROJECT")
     ModelAndView edit(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("projects/create");
 
@@ -68,6 +69,7 @@ public class ProjectController {
      */
 
     @PostMapping("/save")
+    @Secured("ROLE_MANAGE_PROJECT")
     String save(@ModelAttribute Project project, Principal principal) throws ParseException {
         projectService.save(project, principal.getName());
         return "redirect:/projects";
@@ -75,6 +77,7 @@ public class ProjectController {
 
 
     @GetMapping("/delete/{id}")
+    @Secured("ROLE_MANAGE_PROJECT")
     ModelAndView delete(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("projects/delete");
 
@@ -85,8 +88,8 @@ public class ProjectController {
     }
 
     @PostMapping("/delete")
+    @Secured("ROLE_MANAGE_PROJECT")
     String delete(@ModelAttribute Project project) {
-        //boolean isNew = project.getId() == null;
 
         projectRepository.deleteById(project.getId());
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,9 @@ public class PersonService {
     private final PersonRepository personRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public List<Person> findAllEnabled() {
+        return personRepository.findAllByEnabled(true);
+    }
     /*public void prepareAdminUser() {
         if (personRepository.findByUsername("admin").isPresent()) {
             return;
