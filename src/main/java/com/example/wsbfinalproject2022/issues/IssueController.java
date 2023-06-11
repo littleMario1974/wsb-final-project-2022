@@ -1,6 +1,5 @@
 package com.example.wsbfinalproject2022.issues;
 
-import com.example.wsbfinalproject2022.authorities.AuthorityRepository;
 import com.example.wsbfinalproject2022.person.PersonRepository;
 import com.example.wsbfinalproject2022.projects.ProjectRepository;
 import com.example.wsbfinalproject2022.projects.ProjectService;
@@ -29,7 +28,7 @@ public class IssueController {
 
 
     @Autowired
-    public IssueController(IssueRepository issueRepository, PersonRepository personRepository, AuthorityRepository authorityRepository, IssueService issueService, ProjectService projectService, ProjectRepository projectRepository) {
+    public IssueController(IssueRepository issueRepository, PersonRepository personRepository, IssueService issueService, ProjectService projectService, ProjectRepository projectRepository) {
         this.issueRepository = issueRepository;
         this.personRepository = personRepository;
         this.issueService = issueService;

@@ -2,23 +2,26 @@ package com.example.wsbfinalproject2022.person;
 
 import com.example.wsbfinalproject2022.authorities.Authority;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.Set;
 
 @Entity
-public class Person {
+public class Person implements Comparable<Person> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Long id;
 
-    @Column(unique = true, length = 50)
+    @Column(unique = true, length = 30)
+    @Size(min = 3, max = 30)
     private String username;
 
     @Column(length = 100)
+    @Size(min = 4, max = 100)
     private String password;
 
 
@@ -112,5 +115,10 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public int compareTo(Person other) {
+        return this.username.compareTo(other.username);
     }
 }

@@ -16,6 +16,7 @@ public interface IssueRepository extends JpaRepository<Issue, Long>, JpaSpecific
 
     List<Issue> findAllByEnabled(Boolean enabled);
 
+    Issue findByCode(String code);
+
+
 }
-
-

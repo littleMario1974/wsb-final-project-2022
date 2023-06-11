@@ -2,10 +2,7 @@ package com.example.wsbfinalproject2022.person;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -21,7 +18,7 @@ public class PeopleController {
     }
 
     @GetMapping("/")
-    @Secured("ROLE_USER_TAB")
+    @Secured({"ROLE_MANAGE_USERS", "ROLE_USER_TAB"})
     ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("people/index");
         modelAndView.addObject("people", personRepository.findAllByEnabled(true));
@@ -33,6 +30,17 @@ public class PeopleController {
     ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("people/create");
         modelAndView.addObject("person", new Person());
+        return modelAndView;
+    }
+
+    @GetMapping("/edit/{id}")
+    @Secured("ROLE_MANAGE_USERS")
+    ModelAndView edit(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("people/create");
+
+        Person person = personRepository.findById(id).orElse(null);
+        modelAndView.addObject("person", person);
+
         return modelAndView;
     }
 
@@ -48,4 +56,28 @@ public class PeopleController {
 
         return modelAndView;
     }
+
+    @GetMapping("/delete/{id}")
+    @Secured("ROLE_MANAGE_USERS")
+    ModelAndView delete(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("people/delete");
+
+        Person person = personRepository.findById(id).orElse(null);
+        modelAndView.addObject("person", person);
+
+        return modelAndView;
+    }
+
+    @PostMapping("/delete")
+    @Secured("ROLE_MANAGE_USERS")
+    String delete(@ModelAttribute Person person) {
+        person.setEnabled(false);
+        personRepository.save(person);
+
+        return "redirect:/people/";
+
+    }
+
+
+
 }

@@ -9,10 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -20,8 +17,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class IssueService {
 
-
-    // public Boolean notAssigned = false;
 
     final IssueRepository issueRepository;
     final PersonRepository personRepository;
@@ -39,7 +34,8 @@ public class IssueService {
         return findAllEnabled()
                 .stream()
                 .map(Issue::getProject)
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparing(Project::getName))
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     public Set<Person> findAllAssignees() {

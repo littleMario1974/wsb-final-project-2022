@@ -1,62 +1,104 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Projects</title>
+    <meta charset="UTF-8">
+    <title>Projects</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-          crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/main.css" type="text/css"/>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="mt-3">
 
 <div class="container">
+    <div class="btn-group">
 
-  <h1>
-    Usuwanie projektu <span th:text="${project.code}"></span>
-  </h1>
+        <div class="title">
+            Bugtracker
+        </div>
 
-  <form th:action="@{/projects/delete}" th:object="${project}" method="post">
-    <input type="hidden" th:field="*{id}">
+        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+             class="col mt-3">
+            <a th:href="@{'/issues'}" class="btn btn-primary">
+                <h7 th:text="#{issues}"></h7>
+            </a>
+        </div>
 
-    <div class="mb-3 row">
-      <div class="col-4">
-        <label for="project-name" class="form-label">
-          Nazwa
-        </label>
-      </div>
+        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+             class="col mt-3">
+            <a th:href="@{'/projects'}" class="btn btn-dark">
+                <h7 th:text="#{projects}"></h7>
+            </a>
+        </div>
 
-      <div class="col-8">
-        <input type="text" class="form-control" id="project-name" th:field="*{name}">
-      </div>
+        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'USER')}"
+             class="col mt-3">
+            <a th:href="@{'/people/'}" class="btn btn-primary">
+                <h7 th:text="#{users}"></h7>
+            </a>
+        </div>
+
+        <div class="col-6 mt-3">
+            <a th:href="@{'/people/edit/{id}'}" class="btn btn-primary">
+                <h7 th:text="#{my.account}"></h7>
+            </a>
+        </div>
+
+        <div class="col-3 mt-3 text-end">
+            <a th:text="#{logged.in.user} + ': ' +${#authentication.getPrincipal().username}"></a>
+            <form th:action="@{/logout}" method="post" class="form-inline mt-3">
+                <input type="submit" th:value="#{log.out}" class="btn btn-success"/>
+            </form>
+        </div>
     </div>
 
-    <div class="mb-3">
-      <label for="project-code" class="form-label">
-        Kod
-      </label>
+    <h2 th:text="#{project.deletion}"></h2>
 
-      <input type="text" class="form-control" id="project-code" th:field="*{code}">
-    </div>
+    <form th:action="@{/projects/delete}" th:object="${project}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{dateCreated}">
 
-    <div class="mb-3">
-      <label for="project-description" class="form-label">
-        Opis
-      </label>
+        <div class="mb-3 row">
+            <div class="col-4">
+                <label for="project-name" class="form-label">
+                    <h7 th:text="#{projects.name}"></h7>
+                </label>
+            </div>
 
-      <textarea class="form-control" id="project-description" rows="10" th:field="*{description}"></textarea>
-    </div>
+            <div class="col-8">
+                <input type="text" class="form-control" id="project-name" th:field="*{name}">
+            </div>
+        </div>
 
-    <button type="submit" class="btn btn-primary">
-      Usuń projekt
-    </button>
+        <div class="mb-3">
+            <label for="project-code" class="form-label">
+                <h7 th:text="#{code}"></h7>
+            </label>
 
-    <a th:href="@{/projects}" class="btn btn-secondary">
-      Anuluj
-    </a>
-  </form>
+            <input type="text" class="form-control" id="project-code" th:field="*{code}">
+        </div>
+
+        <div class="mb-3">
+            <label for="project-description" class="form-label">
+                <h7 th:text="#{description}"></h7>
+            </label>
+
+            <textarea class="form-control" id="project-description" rows="10" th:field="*{description}"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-danger">
+            <h7 th:text="#{delete}"></h7>
+        </button>
+
+        <a th:href="@{/projects}" class="btn btn-secondary">
+            <h7 th:text="#{cancel}"></h7>
+        </a>
+    </form>
 </div>
 </body>
 </html>
