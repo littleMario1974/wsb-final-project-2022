@@ -2,6 +2,7 @@ package com.example.wsbfinalproject2022.person;
 
 import com.example.wsbfinalproject2022.authorities.Authority;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.Set;
@@ -25,6 +26,7 @@ public class Person {
 
     private Boolean enabled;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss[.SSS][.SS]")
     private Date dateCreated;
 
     private String email;
