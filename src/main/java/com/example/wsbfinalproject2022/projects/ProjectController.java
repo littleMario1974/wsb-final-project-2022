@@ -1,14 +1,17 @@
 package com.example.wsbfinalproject2022.projects;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.text.ParseException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/projects")
@@ -20,9 +23,9 @@ public class ProjectController {
 
     @GetMapping
     @Secured("ROLE_MANAGE_PROJECT")
-    ModelAndView index(@ModelAttribute ProjectFilter filter) {
+    ModelAndView index(@ModelAttribute ProjectFilter filter, Pageable pageable) {
 
-        List<Project> projects = projectService.findAll(filter);
+        Page<Project> projects = projectService.findAll(filter, pageable);
 
         ModelAndView modelAndView = new ModelAndView("projects/index");
         modelAndView.addObject("projects", projects);
@@ -70,11 +73,49 @@ public class ProjectController {
 
     @PostMapping("/save")
     @Secured("ROLE_MANAGE_PROJECT")
-    String save(@ModelAttribute Project project, Principal principal) throws ParseException {
+    ModelAndView save(@ModelAttribute @Valid Project project,
+                BindingResult bindingResult, Principal principal) throws ParseException {
+
+        ModelAndView modelAndView = new ModelAndView("projects/create");
+
+        if (bindingResult.hasErrors()) {
+
+            modelAndView.addObject("project", project);
+
+            return modelAndView;
+
+}
+// walidacja - jeśli project o tym kodzie istnieje w polu code wpisz komunikat
+
+        if (project.getId() == null) {
+
+            if (isProjectNameExists(project)) {
+                bindingResult.rejectValue("name", "duplicate.name");
+                return modelAndView;
+            }
+
+            if (isProjectCodeExists(project)) {
+                bindingResult.rejectValue("code", "duplicate.code");
+                return modelAndView;
+            }
+
+        }
         projectService.save(project, principal.getName());
-        return "redirect:/projects";
+        modelAndView.setViewName("redirect:/projects");
+
+        return modelAndView;
     }
 
+    //metoda sprawdzajaca czy projekt z danym kodem istnieje
+    private boolean isProjectCodeExists(Project project) {
+        Project existingProject = projectRepository.findByCode(project.getCode());
+        return existingProject != null;
+    }
+    //metoda sprawdzajaca czy projekt o danej nazie istnieje
+    private boolean isProjectNameExists(Project project) {
+        Project existingProject = projectRepository.findByName(project.getName());
+        return existingProject != null;
+    }
 
     @GetMapping("/delete/{id}")
     @Secured("ROLE_MANAGE_PROJECT")
