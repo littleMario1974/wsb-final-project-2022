@@ -3,6 +3,7 @@ package com.example.wsbfinalproject2022.issues;
 import com.example.wsbfinalproject2022.person.Person;
 import com.example.wsbfinalproject2022.projects.Project;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Data
-public class Issue {
+public class Issue implements Comparable<Issue> {
 
     @Id
     @GeneratedValue
@@ -29,12 +30,14 @@ public class Issue {
     private IssueType type = IssueType.TASK;
 
     @Column(nullable = false)
+    @Size(min = 5, max = 20)
     private String name;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false) //unique = true)
+    @Column(nullable = false, unique = true)
+    @Size(min = 3, max = 7)
     private String code;
 
     @ManyToOne
@@ -59,4 +62,9 @@ public class Issue {
 
     @Column(nullable = false)
     private Boolean enabled = true;
+
+    @Override
+    public int compareTo(Issue other) {
+        return this.name.compareTo(other.name);
+    }
 }
