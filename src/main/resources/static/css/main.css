@@ -1,9 +1,73 @@
-html {
-    height: 100%;
+body {
+    color: white;
+    background-color: #5a644a;
+/*max-width: 70%;*/
+margin: auto;
+font-size: 15px;
+font-family: Arial;
 }
 
-body {
-    height: 100%;
-    background-color: #565656;
-    color: snow;
+.container {
+background-color: darkseagreen;
+color: darkblue;
 }
+.card-header {rozbudowanie css
+background-color: navy;
+color: blue;
+
+}
+.card-body {
+background-color: #cbd3c8;
+color: #030921;
+}
+
+.title {
+    color: #a22da6;
+    font-size: 40px;
+    font-family: "Arial Black";
+    margin:2px 20px;
+}
+
+/*
+
+a {
+background-color: navy;
+color: red;
+text-decoration: none;
+}
+
+a:hover{
+color: green;
+}
+
+a:visited{
+color: yellow;
+}
+
+a:active{
+color: brown;
+}*/
+/*
+.btn {
+    background-color: #4CAF50;
+
+}
+
+input[type=submit]
+{
+    width: auto;
+    height: auto;
+    background-color: #36b03c;
+    font-size: 20px;
+    color: white;
+    padding: 10px 10px;
+    font-family: Arial;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+input[type=submit]:hover
+{
+    background-color: #37b93d;
+}
+*/
