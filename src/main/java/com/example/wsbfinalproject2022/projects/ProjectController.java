@@ -18,8 +18,8 @@ public class ProjectController {
     private final ProjectRepository projectRepository;
     private final ProjectService projectService;
 
-    @Secured("ROLE_MANAGE_PROJECT")
     @GetMapping
+    @Secured("ROLE_MANAGE_PROJECT")
     ModelAndView index(@ModelAttribute ProjectFilter filter) {
 
         List<Project> projects = projectService.findAll(filter);
@@ -87,6 +87,8 @@ public class ProjectController {
         return modelAndView;
     }
 
+/*
+    // ta metoda delete kasuje projekt z bazy danych
     @PostMapping("/delete")
     @Secured("ROLE_MANAGE_PROJECT")
     String delete(@ModelAttribute Project project) {
@@ -95,6 +97,17 @@ public class ProjectController {
 
         return "redirect:/projects";
 
-
     }
+
+ */
+// ta metoda delete wyłącza w rzeczywistości projekt, nie usuwa z bazy danych
+
+    @PostMapping("/delete")
+    @Secured("ROLE_MANAGE_PROJECT")
+    String delete(@ModelAttribute Project project, Principal principal) throws ParseException {
+         project.setEnabled(false);
+        projectService.save(project, principal.getName());
+        return "redirect:/projects";
+    }
+
 }
