@@ -1,5 +1,4 @@
 package com.example.wsbfinalproject2022.issues;
-
 import com.example.wsbfinalproject2022.person.Person;
 import com.example.wsbfinalproject2022.projects.Project;
 import lombok.AllArgsConstructor;
@@ -44,6 +43,8 @@ public class IssueFilter {
         if (value == null) {
             return Specification.where(null);
         }
+        if("assignee".equals(property)&&((Person)value).getId() == -1)
+            return (root, query, builder) -> builder.isNull(root.get(property));
 
         return (root, query, builder) -> builder.equal(root.get(property), value);
     }
