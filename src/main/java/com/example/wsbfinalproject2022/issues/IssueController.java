@@ -73,7 +73,7 @@ public class IssueController {
         modelAndView.addObject("issue", issueRepository.findAllByEnabled(true));
         modelAndView.addObject("issue", issue);
         modelAndView.addObject("projects", projectRepository.findAllByEnabled(true)); // w widoku Zadań wyświetli wszystkie projekty
-        modelAndView.addObject("person", personRepository.findAll(Sort.by(Sort.Order.by("username")).ascending())); //w widoku Zadań wyświetli wszystkie osoby
+        modelAndView.addObject("person", personRepository.findAllByEnabled(true)); //w widoku Zadań wyświetli wszystkie osoby
 
         return modelAndView;
     }
@@ -94,13 +94,13 @@ public class IssueController {
         }
         // walidacja - jeśli issue o tym kodzie istnieje w polu code wpisz komunikat
 
-        if (issue.getId() == null)
+        if (issue.getId() == null) {
 
-        if (isIssueAlreadyExists(issue)) {
-            bindingResult.rejectValue("code", "duplicate.code");
-            return modelAndView;
+            if (isIssueAlreadyExists(issue)) {
+                bindingResult.rejectValue("code", "duplicate.code");
+                return modelAndView;
+            }
         }
-
         issueService.save(issue, principal.getName());
 
         modelAndView.setViewName("redirect:/issues");
