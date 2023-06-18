@@ -28,6 +28,11 @@ color: #030921;
     margin:2px 20px;
 }
 
+.hidden {
+
+    visibility: hidden;
+
+}
 /*
 
 a {
