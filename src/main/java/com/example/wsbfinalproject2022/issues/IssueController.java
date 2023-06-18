@@ -96,7 +96,12 @@ public class IssueController {
 
         if (issue.getId() == null) {
 
-            if (isIssueAlreadyExists(issue)) {
+            if (isIssueNameExists(issue)) {
+                bindingResult.rejectValue("name", "duplicate.name");
+                return modelAndView;
+            }
+
+            if (isIssueCodeExists(issue)) {
                 bindingResult.rejectValue("code", "duplicate.code");
                 return modelAndView;
             }
@@ -109,10 +114,20 @@ public class IssueController {
     }
 
     //metoda sprawdzajaca czy Issue z danym kodem istnieje
-    private boolean isIssueAlreadyExists(Issue issue) {
+    private boolean isIssueCodeExists(Issue issue) {
         Issue existingIssue = issueRepository.findByCode(issue.getCode());
         return existingIssue != null;
     }
+
+    //metoda sprawdzajaca czy Issue o danej nazie istnieje
+    private boolean isIssueNameExists(Issue issue) {
+        Issue existingIssue = issueRepository.findByName(issue.getName());
+        return existingIssue != null;
+    }
+
+
+
+
 
 
     @GetMapping("/delete/{id}")
