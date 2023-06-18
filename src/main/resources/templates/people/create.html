@@ -78,10 +78,13 @@
 
             <div>
                 <input type="text"
+                       th:class="'form-control ' + ${#fields.hasErrors('username') ? 'is-invalid' : ''}"
                        id="username"
-                       th:field="*{username}"
-                       class="form-control">
+                       th:field="*{username}">
             </div>
+
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span>
+
         </div>
 
         <div class="row">
