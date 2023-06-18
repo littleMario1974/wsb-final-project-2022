@@ -45,7 +45,7 @@
         </div>
 
         <div class="col-6 mt-3">
-            <a th:href="@{'/people/edit/{id}'}" class="btn btn-primary">
+            <a th:href="@{'/people/edit/self'}" class="btn btn-primary">
                 <h7 th:text="#{my.account}"></h7>
             </a>
         </div>
@@ -80,14 +80,11 @@
 
 
                 <option th:each="c : ${assignees}"
+                        th:if="${c!=null}"
                         th:value="${c.getId()}"
-                        th:if="${c.getId() == -1}"
-                        th:text="#{not.assigned}"></option>
-
-                <option th:each="c : ${assignees}"
-                        th:value="${c.getId()}"
-                        th:if="${c.getId() != -1}"
                         th:text="${c.username}"></option>
+                <option th:value="-1"
+                        th:text="#{not.assigned}"></option>
 
             </select>
         </div>
@@ -141,9 +138,9 @@
         <div class="card mt-4">
             <h5 class="card-header" th:text="#{issues.name} + ': ' + ${issue.getName()}"></h5>
 
-            <h7 class="card-header" th:if="${issue.assignee.id != -1}"
+            <h7 class="card-header" th:if="${issue.assignee != null}"
                 th:text="#{issues.assignee} + ': ' + ${issue.assignee.getUsername()} + ', ' + #{project} + ': ' + ${issue.project.name}"></h7>
-            <h7 class="card-header" th:if="${issue.assignee.id == -1}"
+            <h7 class="card-header" th:if="${issue.assignee == null}"
                 th:text="#{issues.assignee} + ': ' + #{not.assigned} + ', ' + #{project} + ': ' + ${issue.project.name}"></h7>
             <div class="card-body">
                 <p class="card-text" th:text="${issue.getDescription()}"></p>
