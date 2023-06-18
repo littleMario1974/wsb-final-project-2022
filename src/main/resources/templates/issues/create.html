@@ -58,10 +58,10 @@
     </div>
 
     <h2 th:if="${issue.id == null}" th:text="#{new.issue}">
-        </h2>
+    </h2>
     </h2>
     <h2 th:if="${issue.id != null}" th:text="#{edit.issue}">
-        </h2>
+    </h2>
 
     <form th:action="@{/issues/save}" th:object="${issue}" method="post">
         <input type="hidden" th:field="*{id}">
@@ -96,8 +96,6 @@
 
             </div>
 
-
-
             <div class="col-8">
                 <input type="text"
                        th:class="'form-control ' + ${#fields.hasErrors('name') ? 'is-invalid' : ''}"
@@ -106,7 +104,6 @@
             </div>
 
             <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
-
 
         </div>
 
