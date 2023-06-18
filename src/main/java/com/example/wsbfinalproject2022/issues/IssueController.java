@@ -92,7 +92,7 @@ public class IssueController {
             modelAndView.addObject("person", personRepository.findAll(Sort.by(Sort.Order.by("username")).ascending())); //w widoku Zadań wyświetli wszystkie osoby
             return modelAndView;
         }
-        // walidacja - jeśli issue o tym kodzie istnieje w polu code wpisz komunikat
+        // walidacja - przy tworzeniu nowego issue jeśli issue o tej nazwie lub kodzie istnieje w polu wpisz komunikat
 
         if (issue.getId() == null) {
 
