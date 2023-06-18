@@ -14,7 +14,7 @@
             integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
             crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="mt-3">
 <div class="container">
 
     <div class="btn-group">
@@ -45,7 +45,7 @@
         </div>
 
         <div class="col-6 mt-3">
-            <a th:href="@{'/people/'}" class="btn btn-primary">
+            <a th:href="@{'/people/edit/self'}" class="btn btn-primary">
                 <h7 th:text="#{my.account}"></h7>
             </a>
         </div>
@@ -98,7 +98,6 @@
                        class="form-control">
             </div>
         </div>
-
         <div class="row">
             <div>
                 <label for="userRealName">
@@ -142,7 +141,7 @@
                 <h7 th:text="#{save}"></h7>
             </button>
 
-            <a th:href="@{/people/}" class="btn btn-secondary mt-4">
+            <a th:href="@{/}" class="btn btn-secondary mt-4">
                 <h7 th:text="#{cancel}"></h7>
             </a>
             <!--script>
