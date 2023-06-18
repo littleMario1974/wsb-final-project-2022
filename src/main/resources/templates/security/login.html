@@ -14,7 +14,7 @@
 
     <div th:if="${param.error}" class="alert alert-danger">
         <span>
-        "Błędny login lub hasło"
+        <h1 th:text="#{login.error}"></h1>
 
         </span>
     </div>
@@ -22,9 +22,9 @@
 
 
     <form th:action="@{/login}" method="post" class="login-form">
-        <h1>
-            Zaloguj się
-        </h1>
+
+        <h1 th:text="#{login.label}"></h1>
+
         <div class="form-group">
             <label for="username"></label>
             <input id="username" type="text" name="username" class="form-control" autofocus/>
@@ -36,8 +36,7 @@
         </div>
 
         <div class="mt-3">
-            <button type="submit" class="btn btn-primary">
-                Zaloguj się
+            <button th:text="#{login.label} "type="submit" class="btn btn-primary">
             </button>
         </div>
     </form>
