@@ -19,4 +19,6 @@ public interface IssueRepository extends JpaRepository<Issue, Long>, JpaSpecific
     List<Issue> findAllByAssignee(Person person);
 
     Issue findByCode(String code);
+
+    Issue findByName(String name);
 }
