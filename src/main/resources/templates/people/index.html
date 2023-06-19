@@ -71,14 +71,26 @@
     </div>
 
     <form class="row">
+        <h5 class="mt-1 col-3" th:text="#{userRealName}"></h5>
+        <h5 class="mt-1 col-2" th:text="#{username}"></h5>
+        <h5 class="mt-1 col-5" th:text="E-mail"></h5>
+        <div class="row" th:each="person : ${people}">
 
-    <div class="row" th:each="person : ${people}">
-        <h5 class="card mt-1 col-6">
-
+            <h5 class="card mt-1 col-3" >
         <p th:text="${person.userRealName}"></p>
-
         </h5>
-        <div class="mt-2 col-4">
+
+            <h5 class="card mt-1 col-2" >
+                <p th:text="${person.username}"></p>
+            </h5>
+
+            <h5 class="card mt-1 col-5" >
+                <p th:text="${person.email}"></p>
+            </h5>
+
+
+
+        <div class="mt-1 col-2">
 
             <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_USERS')}"
                th:href="@{'/people/edit/' + ${person.id}}" class="btn btn-secondary">
