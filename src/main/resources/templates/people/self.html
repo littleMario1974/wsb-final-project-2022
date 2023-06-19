@@ -58,10 +58,7 @@
     </div>
   </div>
 
-  <h2 th:if="${person.id == null}" th:text="#{new.user}">
-  </h2>
-
-  <h2 th:if="${person.id != null}" th:text="#{user.edit}">
+  <h2 th:text="#{user.edit}">
     <span th:text="${userRealName}"></span>
   </h2>
 
@@ -79,23 +76,42 @@
       <div>
         <input type="text"
                id="username"
-               th:field="*{username}"
+               th:field="*{username}" readonly
                class="form-control">
       </div>
     </div>
 
-    <div class="row">
+    <div class="mb-3">
       <div>
-        <label for="password">
-          <h7 th:text="#{password}"></h7>
-        </label>
+        <label for="password" th:text="#{password}"></label>
       </div>
-
       <div>
-        <input type="text"
-               id="password"
+        <input id="password"
+               type="password"
                th:field="*{password}"
-               class="form-control">
+               th:placeholder="#{password}"
+               th:class="'form-control ' + ${#fields.hasErrors('password') ? 'is-invalid' : ''}"/>
+
+        <small class="text-danger"
+               th:if="${#fields.hasErrors('password')}"
+               th:errors="*{password}"></small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div>
+        <label for="password" th:text="#{repeat.password}"></label>
+      </div>
+      <div>
+        <input id="repeated-password"
+               type="password"
+               th:field="*{repeatedPassword}"
+               th:placeholder="#{password}"
+               th:class="form-control"/>
+
+        <small class="text-danger"
+               th:if="${#fields.hasErrors('repeatedPassword')}"
+               th:errors="*{repeatedPassword}"></small>
       </div>
     </div>
 
@@ -108,10 +124,14 @@
 
       <div>
         <input type="text"
+               th:class="'form-control ' + ${#fields.hasErrors('userRealName') ? 'is-invalid' : ''}"
                id="userRealName"
-               th:field="*{userRealName}"
-               class="form-control">
+               th:field="*{userRealName}">
+
       </div>
+
+      <span th:if="${#fields.hasErrors('userRealName')}" th:errors="*{userRealName}" class="text-danger"></span>
+
     </div>
 
     <div class="row">
@@ -123,10 +143,14 @@
 
       <div>
         <input type="text"
+               th:class="'form-control ' + ${#fields.hasErrors('email') ? 'is-invalid' : ''}"
                id="email"
-               th:field="*{email}"
-               class="form-control">
+               th:field="*{email}">
       </div>
+
+      <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+
+
     </div>
     <fieldset>
 
