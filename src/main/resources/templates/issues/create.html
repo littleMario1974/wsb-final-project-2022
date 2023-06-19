@@ -194,9 +194,11 @@
         </div>
 
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" onclick="sendEmail()">
             <h7 th:text="#{save}"></h7>
         </button>
+
+        <div id="confirmationMessage" class="confirmation-message" th:text="#{email.sent}"></div>
 
         <a th:href="@{/issues}" class="btn btn-secondary">
             <h7 th:text="#{cancel}"></h7>
@@ -204,5 +206,20 @@
 
     </form>
 
+
+
+
 </div>
+
+<script>
+    function sendEmail() {
+        var confirmationMessage = document.getElementById("confirmationMessage");
+        confirmationMessage.style.display = "block";
+        setTimeout(function() {
+            confirmationMessage.style.display = "none";
+        }, 3000);
+    }
+</script>
+
+
 </body>
