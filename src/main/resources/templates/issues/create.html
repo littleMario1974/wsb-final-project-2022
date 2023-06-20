@@ -198,7 +198,9 @@
             <h7 th:text="#{save}"></h7>
         </button>
 
-        <div id="confirmationMessage" class="confirmation-message" th:text="#{email.sent}"></div>
+        <div id="confirmationMessage" class="confirmation-message"
+             th:if="*{assignee != null}"
+             th:text="#{email.sent}"></div>
 
         <a th:href="@{/issues}" class="btn btn-secondary">
             <h7 th:text="#{cancel}"></h7>
