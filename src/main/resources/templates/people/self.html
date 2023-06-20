@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Users</title>
+
+  <link rel="stylesheet" href="/css/main.css" type="text/css"/>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"></script>
+</head>
+<body class="mt-3">
+<div class="container">
+
+  <div class="btn-group">
+
+    <div class="title">
+      Bugtracker
+    </div>
+
+    <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+         class="col mt-3">
+      <a th:href="@{'/issues'}" class="btn btn-primary">
+        <h7 th:text="#{issues}"></h7>
+      </a>
+    </div>
+
+    <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+         class="col mt-3">
+      <a th:href="@{'/projects'}" class="btn btn-primary">
+        <h7 th:text="#{projects}"></h7>
+      </a>
+    </div>
+
+    <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'USER')}"
+         class="col mt-3">
+      <a th:href="@{'/people/'}" class="btn btn-primary">
+        <h7 th:text="#{users}"></h7>
+      </a>
+    </div>
+
+    <div class="col-6 mt-3">
+      <a th:href="@{'/people/edit/self'}" class="btn btn-dark">
+        <h7 th:text="#{my.account}"></h7>
+      </a>
+    </div>
+
+    <div class="col-3 mt-3 text-end">
+      <a th:text="#{logged.in.user} + ': ' +${#authentication.getPrincipal().username}"></a>
+      <form th:action="@{/logout}" method="post" class="form-inline mt-3">
+        <input type="submit" th:value="#{log.out}" class="btn btn-success"/>
+      </form>
+    </div>
+  </div>
+
+  <h2 th:text="#{user.edit}">
+    <span th:text="${userRealName}"></span>
+  </h2>
+
+
+
+  <form th:action="@{/people/save}" th:object="${person}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <div class="row">
+      <div>
+        <label for="username">
+          <h7 th:text="#{username}"></h7>
+        </label>
+      </div>
+
+      <div>
+        <input type="text"
+               id="username"
+               th:field="*{username}" readonly
+               class="form-control">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div>
+        <label for="password" th:text="#{password}"></label>
+      </div>
+      <div>
+        <input id="password"
+               type="password"
+               th:field="*{password}"
+               th:placeholder="#{password}"
+               th:class="'form-control ' + ${#fields.hasErrors('password') ? 'is-invalid' : ''}"/>
+
+        <small class="text-danger"
+               th:if="${#fields.hasErrors('password')}"
+               th:errors="*{password}"></small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div>
+        <label for="password" th:text="#{repeat.password}"></label>
+      </div>
+      <div>
+        <input id="repeated-password"
+               type="password"
+               th:field="*{repeatedPassword}"
+               th:placeholder="#{password}"
+               th:class="form-control"/>
+
+        <small class="text-danger"
+               th:if="${#fields.hasErrors('repeatedPassword')}"
+               th:errors="*{repeatedPassword}"></small>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="userRealName">
+          <h7 th:text="#{userRealName}"></h7>
+        </label>
+      </div>
+
+      <div>
+        <input type="text"
+               th:class="'form-control ' + ${#fields.hasErrors('userRealName') ? 'is-invalid' : ''}"
+               id="userRealName"
+               th:field="*{userRealName}">
+
+      </div>
+
+      <span th:if="${#fields.hasErrors('userRealName')}" th:errors="*{userRealName}" class="text-danger"></span>
+
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="email">
+          <h7 th:text="E-mail"></h7>
+        </label>
+      </div>
+
+      <div>
+        <input type="text"
+               th:class="'form-control ' + ${#fields.hasErrors('email') ? 'is-invalid' : ''}"
+               id="email"
+               th:field="*{email}">
+      </div>
+
+      <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+
+
+    </div>
+    <fieldset>
+
+
+
+      <input class="hidden" type="checkbox" value="1" th:field="*{authorities}" />
+      <input class="hidden" type="checkbox" value="2" th:field="*{authorities}" />
+      <input class="hidden" type="checkbox" value="3" th:field="*{authorities}" />
+      <input class="hidden" type="checkbox" value="4" th:field="*{authorities}" />
+    </fieldset>
+
+
+    <div>
+      <button class="btn btn-primary mt-4" type="submit">
+        <h7 th:text="#{save}"></h7>
+      </button>
+
+      <a
+              th:href="@{/}" class="btn btn-secondary mt-4">
+        <h7 th:text="#{cancel}"></h7>
+      </a>
+
+
+
+
+      <!--script>
+          var f = document.getElementsByName('authority');
+          var v ='';
+          for(var i = 0; i < f.length; i++){
+              if(f[i].checked){
+                  v = v+' '+ f[i].value;
+              }
+          }
+          if (v=='') {v="Nie dokonałeś żadnego wyboru.";}
+          alert(v);
+      </script-->
+    </div>
+  </form>
+</div>
+</body>
+</html>

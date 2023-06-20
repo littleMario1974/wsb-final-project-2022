@@ -44,7 +44,7 @@
         </div>
 
         <div class="col-6 mt-3">
-            <a th:href="@{'/people/edit/{id}'}" class="btn btn-primary">
+            <a th:href="@{'/people/edit/self'}" class="btn btn-primary">
                 <h7 th:text="#{my.account}"></h7>
             </a>
         </div>
@@ -71,7 +71,7 @@
             </div>
 
             <div class="col-8">
-                <input type="text" class="form-control" id="project-name" th:field="*{name}">
+                <input type="text" class="form-control" id="project-name" th:field="*{name}" readonly>
             </div>
         </div>
 
@@ -80,7 +80,7 @@
                 <h7 th:text="#{code}"></h7>
             </label>
 
-            <input type="text" class="form-control" id="project-code" th:field="*{code}">
+            <input type="text" class="form-control" id="project-code" th:field="*{code}" readonly>
         </div>
 
         <div class="mb-3">
@@ -88,7 +88,7 @@
                 <h7 th:text="#{description}"></h7>
             </label>
 
-            <textarea class="form-control" id="project-description" rows="10" th:field="*{description}"></textarea>
+            <textarea class="form-control" id="project-description" rows="10" th:field="*{description}" readonly></textarea>
         </div>
 
         <button type="submit" class="btn btn-danger">

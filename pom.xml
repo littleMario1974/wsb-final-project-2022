@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -72,6 +72,26 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<version>6.0.2</version>
+		</dependency>
+
+		<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-mail</artifactId>
+	</dependency>
+		<dependency>
+			<groupId>example</groupId>
+			<artifactId>example</artifactId>
+			<version>-</version>
+		</dependency>
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>example-utils</artifactId>
+			<version>0.1.0</version>
+		</dependency>
 
 	</dependencies>
 
@@ -91,5 +111,12 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>clojars</id>
+			<name>Clojars</name>
+			<url>https://repo.clojars.org/</url>
+		</repository>
+	</repositories>
 
 </project>

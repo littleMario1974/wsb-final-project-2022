@@ -47,7 +47,7 @@
         </div>
 
         <div class="col-6 mt-3">
-            <a th:href="@{'/people/edit/{id}'}" class="btn btn-primary">
+            <a th:href="@{'/people/edit/self'}" class="btn btn-primary">
                 <h7 th:text="#{my.account}"></h7>
             </a>
         </div>
@@ -73,14 +73,14 @@
             </div>
 
             <div>
-                <input type="text"
+                <input type="text" readonly
                        id="username"
                        th:field="*{username}"
                        class="form-control">
             </div>
         </div>
 
-        <div class="row">
+        <!--div class="row">
             <div>
                 <label for="password">
                     <h7 th:text="#{password}"></h7>
@@ -93,7 +93,7 @@
                        th:field="*{password}"
                        class="form-control">
             </div>
-        </div>
+        </div-->
 
         <div class="row">
             <div>
@@ -103,7 +103,7 @@
             </div>
 
             <div>
-                <input type="text"
+                <input type="text" readonly
                        id="userRealName"
                        th:field="*{userRealName}"
                        class="form-control">
@@ -118,7 +118,7 @@
             </div>
 
             <div>
-                <input type="text"
+                <input type="text" readonly
                        id="email"
                        th:field="*{email}"
                        class="form-control">
@@ -126,10 +126,10 @@
         </div>
         <fieldset>
             <legend th:text="#{permissions}"></legend>
-            <input type="checkbox" value="1" th:field="*{authorities}"/> ROLE_MANAGE_PROJECT<br>
-            <input type="checkbox" value="2" th:field="*{authorities}"/> ROLE_MANAGE_COMMENTS<br>
-            <input type="checkbox" value="3" th:field="*{authorities}"/> ROLE_USER_TAB<br>
-            <input type="checkbox" value="4" th:field="*{authorities}"/> ROLE_MANAGE_USERS<br>
+            <input type="checkbox" value="1" th:field="*{authorities}" th:readonly="true" th:disabled="true"/> ROLE_MANAGE_PROJECT<br>
+            <input type="checkbox" value="2" th:field="*{authorities}" th:readonly="true" th:disabled="true"/> ROLE_MANAGE_COMMENTS<br>
+            <input type="checkbox" value="3" th:field="*{authorities}" th:readonly="true" th:disabled="true"/> ROLE_USER_TAB<br>
+            <input type="checkbox" value="4" th:field="*{authorities}" th:readonly="true" th:disabled="true"/> ROLE_MANAGE_USERS<br>
         </fieldset>
 
         <div>

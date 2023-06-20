@@ -44,7 +44,7 @@
         </div>
 
         <div class="col-6 mt-3">
-            <a th:href="@{'/people/edit/{id}'}" class="btn btn-primary">
+            <a th:href="@{'/people/edit/self'}" class="btn btn-primary">
                 <h7 th:text="#{my.account}"></h7>
             </a>
         </div>
@@ -58,10 +58,10 @@
     </div>
 
     <h2 th:if="${issue.id == null}" th:text="#{new.issue}">
-        </h2>
+    </h2>
     </h2>
     <h2 th:if="${issue.id != null}" th:text="#{edit.issue}">
-        </h2>
+    </h2>
 
     <form th:action="@{/issues/save}" th:object="${issue}" method="post">
         <input type="hidden" th:field="*{id}">
@@ -96,8 +96,6 @@
 
             </div>
 
-
-
             <div class="col-8">
                 <input type="text"
                        th:class="'form-control ' + ${#fields.hasErrors('name') ? 'is-invalid' : ''}"
@@ -106,7 +104,6 @@
             </div>
 
             <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
-
 
         </div>
 
@@ -181,9 +178,9 @@
                     class="form-control"
                     th:field="*{assignee}">
 
-                <option th:each="person : ${person}"
-                        th:value="${person.id}"
-                        th:if="${person.id == -1}"
+                <option
+                        th:value="null"
+
                         th:text="#{not.assigned}">
 
                 <option th:each="person : ${person}"
@@ -197,9 +194,13 @@
         </div>
 
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" onclick="sendEmail()">
             <h7 th:text="#{save}"></h7>
         </button>
+
+        <div id="confirmationMessage" class="confirmation-message"
+             th:if="*{assignee != null}"
+             th:text="#{email.sent}"></div>
 
         <a th:href="@{/issues}" class="btn btn-secondary">
             <h7 th:text="#{cancel}"></h7>
@@ -207,5 +208,20 @@
 
     </form>
 
+
+
+
 </div>
+
+<script>
+    function sendEmail() {
+        var confirmationMessage = document.getElementById("confirmationMessage");
+        confirmationMessage.style.display = "block";
+        setTimeout(function() {
+            confirmationMessage.style.display = "none";
+        }, 3000);
+    }
+</script>
+
+
 </body>

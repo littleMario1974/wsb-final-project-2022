@@ -2,13 +2,22 @@ package com.example.wsbfinalproject2022.person;
 
 import com.example.wsbfinalproject2022.authorities.Authority;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.Set;
 
+
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Person implements Comparable<Person> {
 
     @Id
@@ -22,9 +31,13 @@ public class Person implements Comparable<Person> {
 
     @Column(length = 100)
     @Size(min = 4, max = 100)
+    @Pattern(regexp = "(?=.*\\d)(?=.*[A-Z]).+")
     private String password;
 
+    @Transient
+    String repeatedPassword;
 
+    @Size(min = 2, max = 100)
     private String userRealName;
 
     private Boolean enabled;
@@ -32,6 +45,7 @@ public class Person implements Comparable<Person> {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss[.SSS][.SS]")
     private Date dateCreated;
 
+    @Email
     private String email;
 
     public Set<Authority> getAuthorities() {
@@ -47,10 +61,6 @@ public class Person implements Comparable<Person> {
     joinColumns = @JoinColumn(name = "person_id"),
     inverseJoinColumns = @JoinColumn(name = "authority_id"))
     Set<Authority> authorities;
-
-
-    public Person() {
-    }
 
     public Person(String username, String password, String userRealName, Boolean enabled, String email) {
         this.username = username;
@@ -69,12 +79,16 @@ public class Person implements Comparable<Person> {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() {return password;}
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRepeatedPassword() {return repeatedPassword;}
+
+    public void setRepeatedPassword(String password) {
+        this.repeatedPassword = repeatedPassword;
     }
 
     public String getUserRealName() {

@@ -73,7 +73,7 @@ public class IssueController {
         modelAndView.addObject("issue", issueRepository.findAllByEnabled(true));
         modelAndView.addObject("issue", issue);
         modelAndView.addObject("projects", projectRepository.findAllByEnabled(true)); // w widoku Zadań wyświetli wszystkie projekty
-        modelAndView.addObject("person", personRepository.findAll(Sort.by(Sort.Order.by("username")).ascending())); //w widoku Zadań wyświetli wszystkie osoby
+        modelAndView.addObject("person", personRepository.findAllByEnabled(true)); //w widoku Zadań wyświetli wszystkie osoby
 
         return modelAndView;
     }
@@ -92,15 +92,20 @@ public class IssueController {
             modelAndView.addObject("person", personRepository.findAll(Sort.by(Sort.Order.by("username")).ascending())); //w widoku Zadań wyświetli wszystkie osoby
             return modelAndView;
         }
-        // walidacja - jeśli issue o tym kodzie istnieje w polu code wpisz komunikat
+        // walidacja - przy tworzeniu nowego issue jeśli issue o tej nazwie lub kodzie istnieje w polu wpisz komunikat
 
-        if (issue.getId() == null)
+        if (issue.getId() == null) {
 
-        if (isIssueAlreadyExists(issue)) {
-            bindingResult.rejectValue("code", "duplicate.code");
-            return modelAndView;
+            if (isIssueNameExists(issue)) {
+                bindingResult.rejectValue("name", "duplicate.name");
+                return modelAndView;
+            }
+
+            if (isIssueCodeExists(issue)) {
+                bindingResult.rejectValue("code", "duplicate.code");
+                return modelAndView;
+            }
         }
-
         issueService.save(issue, principal.getName());
 
         modelAndView.setViewName("redirect:/issues");
@@ -109,10 +114,20 @@ public class IssueController {
     }
 
     //metoda sprawdzajaca czy Issue z danym kodem istnieje
-    private boolean isIssueAlreadyExists(Issue issue) {
+    private boolean isIssueCodeExists(Issue issue) {
         Issue existingIssue = issueRepository.findByCode(issue.getCode());
         return existingIssue != null;
     }
+
+    //metoda sprawdzajaca czy Issue o danej nazie istnieje
+    private boolean isIssueNameExists(Issue issue) {
+        Issue existingIssue = issueRepository.findByName(issue.getName());
+        return existingIssue != null;
+    }
+
+
+
+
 
 
     @GetMapping("/delete/{id}")

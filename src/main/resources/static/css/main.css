@@ -28,46 +28,34 @@ color: #030921;
     margin:2px 20px;
 }
 
-/*
+.hidden {
 
-a {
-background-color: navy;
-color: red;
-text-decoration: none;
-}
-
-a:hover{
-color: green;
-}
-
-a:visited{
-color: yellow;
-}
-
-a:active{
-color: brown;
-}*/
-/*
-.btn {
-    background-color: #4CAF50;
+    visibility: hidden;
 
 }
-
-input[type=submit]
-{
-    width: auto;
-    height: auto;
-    background-color: #36b03c;
-    font-size: 20px;
+.confirmation-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: red;
     color: white;
-    padding: 10px 10px;
-    font-family: Arial;
-    border: none;
+    font-size: 24px;
     border-radius: 5px;
-    cursor: pointer;
+    z-index: 9999;
+    animation: fadeOut 3s forwards;
 }
-input[type=submit]:hover
-{
-    background-color: #37b93d;
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
-*/

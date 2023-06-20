@@ -14,7 +14,7 @@
             integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
             crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="mt-3">
 <div class="container">
 
     <div class="btn-group">
@@ -45,7 +45,7 @@
         </div>
 
         <div class="col-6 mt-3">
-            <a th:href="@{'/people/'}" class="btn btn-primary">
+            <a th:href="@{'/people/edit/self'}" class="btn btn-primary">
                 <h7 th:text="#{my.account}"></h7>
             </a>
         </div>
@@ -78,26 +78,53 @@
 
             <div>
                 <input type="text"
+                       th:class="'form-control ' + ${#fields.hasErrors('username') ? 'is-invalid' : ''}"
                        id="username"
-                       th:field="*{username}"
-                       class="form-control">
+                       th:field="*{username}">
             </div>
+
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span>
+
         </div>
 
-        <div class="row">
-            <div>
-                <label for="password">
-                    <h7 th:text="#{password}"></h7>
-                </label>
-            </div>
 
+
+
+
+        <div class="mb-3">
             <div>
-                <input type="text"
-                       id="password"
+                <label for="password" th:text="#{password}"></label>
+            </div>
+            <div>
+                <input id="password"
+                       type="password"
                        th:field="*{password}"
-                       class="form-control">
+                       th:placeholder="#{password}"
+                       th:class="'form-control ' + ${#fields.hasErrors('password') ? 'is-invalid' : ''}"/>
+
+                <small class="text-danger"
+                       th:if="${#fields.hasErrors('password')}"
+                       th:errors="*{password}"></small>
             </div>
         </div>
+
+        <div class="mb-3">
+            <div>
+                <label for="password" th:text="#{repeat.password}"></label>
+            </div>
+            <div>
+                <input id="repeated-password"
+                       type="password"
+                       th:field="*{repeatedPassword}"
+                       th:placeholder="#{password}"
+                       th:class="form-control"/>
+
+                <small class="text-danger"
+                       th:if="${#fields.hasErrors('repeatedPassword')}"
+                       th:errors="*{repeatedPassword}"></small>
+            </div>
+        </div>
+
 
         <div class="row">
             <div>
@@ -108,10 +135,14 @@
 
             <div>
                 <input type="text"
+                       th:class="'form-control ' + ${#fields.hasErrors('userRealName') ? 'is-invalid' : ''}"
                        id="userRealName"
-                       th:field="*{userRealName}"
-                       class="form-control">
+                       th:field="*{userRealName}">
+
             </div>
+
+            <span th:if="${#fields.hasErrors('userRealName')}" th:errors="*{userRealName}" class="text-danger"></span>
+
         </div>
 
         <div class="row">
@@ -123,10 +154,14 @@
 
             <div>
                 <input type="text"
+                       th:class="'form-control ' + ${#fields.hasErrors('email') ? 'is-invalid' : ''}"
                        id="email"
-                       th:field="*{email}"
-                       class="form-control">
+                       th:field="*{email}">
             </div>
+
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+
+
         </div>
         <fieldset>
             <legend th:text="#{permissions}"></legend>
@@ -142,7 +177,7 @@
                 <h7 th:text="#{save}"></h7>
             </button>
 
-            <a th:href="@{/people/}" class="btn btn-secondary mt-4">
+            <a th:href="@{/}" class="btn btn-secondary mt-4">
                 <h7 th:text="#{cancel}"></h7>
             </a>
             <!--script>
