@@ -198,30 +198,39 @@
             <h7 th:text="#{save}"></h7>
         </button>
 
-        <div id="confirmationMessage" class="confirmation-message"
-             th:if="*{assignee != null}"
-             th:text="#{email.sent}"></div>
 
         <a th:href="@{/issues}" class="btn btn-secondary">
             <h7 th:text="#{cancel}"></h7>
         </a>
 
-    </form>
+        <div id="confirmationMessage" class="confirmation-message"
+             th:if="*{assignee != 'Nieprzydzielony'}"
+             th:text="#{email.sent}"></div>
 
 
-
+</form>
 
 </div>
-
-<script>
+<script th:inline="javascript">
     function sendEmail() {
-        var confirmationMessage = document.getElementById("confirmationMessage");
-        confirmationMessage.style.display = "block";
-        setTimeout(function() {
-            confirmationMessage.style.display = "none";
-        }, 7000);
+        var assigneeSelect = document.getElementById("assignee");
+        var selectedOption = assigneeSelect.options[assigneeSelect.selectedIndex];
+        var selectedValue = selectedOption.textContent;
+
+        if (selectedValue !== "Nieprzydzielony") {
+            var confirmationMessage = document.getElementById("confirmationMessage");
+            var emailSentTranslation = /*[[#{email.sent}]]*/ '';
+            confirmationMessage.innerText = emailSentTranslation + selectedValue;
+            confirmationMessage.style.display = 'block';
+
+            setTimeout(function () {
+                confirmationMessage.style.display = 'none';
+            }, 7000);
+        }
     }
 </script>
+
+
 
 
 </body>
