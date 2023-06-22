@@ -89,7 +89,7 @@ public class IssueController {
 
             modelAndView.addObject("issue", issue);
             modelAndView.addObject("projects", projectRepository.findAllByEnabled(true)); // w widoku Zadań wyświetli wszystkie projekty
-            modelAndView.addObject("person", personRepository.findAll(Sort.by(Sort.Order.by("username")).ascending())); //w widoku Zadań wyświetli wszystkie osoby
+            modelAndView.addObject("person", personRepository.findAllByEnabled(true)); //w widoku Zadań wyświetli wszystkie osoby aktywne
             return modelAndView;
         }
         // walidacja - przy tworzeniu nowego issue jeśli issue o tej nazwie lub kodzie istnieje w polu wpisz komunikat
