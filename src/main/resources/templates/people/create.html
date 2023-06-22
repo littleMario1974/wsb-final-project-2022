@@ -165,10 +165,10 @@
         </div>
         <fieldset>
             <legend th:text="#{permissions}"></legend>
-            <input type="checkbox" value="1" th:field="*{authorities}" /> ROLE_MANAGE_PROJECT<br>
-            <input type="checkbox" value="2" th:field="*{authorities}" /> ROLE_MANAGE_COMMENTS<br>
-            <input type="checkbox" value="3" th:field="*{authorities}" /> ROLE_USER_TAB<br>
-            <input type="checkbox" value="4" th:field="*{authorities}" /> ROLE_MANAGE_USERS<br>
+            <input type="checkbox" value="1" th:field="*{authorities}" /> <label th:text="#{ROLE_MANAGE_PROJECT}"></label><br>
+            <input type="checkbox" value="2" th:field="*{authorities}" /> <label th:text="#{ROLE_MANAGE_COMMENTS}"></label><br>
+            <input type="checkbox" value="3" th:field="*{authorities}" /> <label th:text="#{ROLE_USER_TAB}"></label><br>
+            <input type="checkbox" value="4" th:field="*{authorities}" /> <label th:text="#{ROLE_MANAGE_USERS}"></label><br>
         </fieldset>
 
 
