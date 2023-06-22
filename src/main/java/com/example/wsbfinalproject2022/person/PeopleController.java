@@ -102,37 +102,6 @@ public class PeopleController {
     }
 
 
-    /*@PostMapping("/save")
-    //@Secured("ROLE_MANAGE_USERS")
-    ModelAndView save(@ModelAttribute @Valid Person person,
-                      BindingResult bindingResult) {
-
-        ModelAndView modelAndView = new ModelAndView("people/create");
-
-        if (bindingResult.hasErrors()) {
-
-            modelAndView.addObject("person", person);
-            return modelAndView;
-
-        }
-        personService.savePerson(person);
-
-        modelAndView.setViewName("redirect:/");
-        return modelAndView;
-
-    }
-    */
-
-
-
-
-
-
-
-
-
-
-
     //metoda sprawdzajaca czy Person o danej nazwie istnieje
     private boolean isPersonNameExists(Person person) {
         Optional<Person> existingPerson = personRepository.findByUsername(person.getUsername());
