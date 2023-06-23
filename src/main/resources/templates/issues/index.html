@@ -23,12 +23,13 @@
             Bugtracker
         </div>
 
-        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT') || #strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_COMMENTS')}"
              class="col mt-3">
             <a th:href="@{'/issues'}" class="btn btn-dark">
                 <h7 th:text="#{issues}"></h7>
             </a>
         </div>
+
 
         <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
              class="col mt-3">
@@ -116,7 +117,8 @@
         </div>
 
         <div class="col-2 text-end">
-            <a th:href="@{'/issues/create'}" class="btn btn-secondary">
+            <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+                    th:href="@{'/issues/create'}" class="btn btn-secondary">
                 <h7 th:text="#{new.issue}"></h7>
             </a>
         </div>
@@ -144,12 +146,14 @@
                 th:text="#{issues.assignee} + ': ' + #{not.assigned} + ', ' + #{project} + ': ' + ${issue.project.name}"></h7>
             <div class="card-body">
                 <p class="card-text" th:text="${issue.getDescription()}"></p>
-                <a th:href="@{'/issues/edit/' + ${issue.id}}" class="btn btn-secondary">
+                <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+                   th:href="@{'/issues/edit/' + ${issue.id}}" class="btn btn-secondary">
                     <h7 th:text="#{edit}"></h7>
                 </a>
                 </td>
                 <td>
-                    <a th:href="@{'/issues/delete/' + ${issue.id}}" class="btn btn-secondary">
+                    <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+                            th:href="@{'/issues/delete/' + ${issue.id}}" class="btn btn-secondary">
                         <h7 th:text="#{delete}"></h7>
                     </a>
             </div>

@@ -37,7 +37,7 @@ public class IssueController {
     }
 
     @GetMapping
-    @Secured("ROLE_MANAGE_PROJECT")
+    @Secured({"ROLE_MANAGE_PROJECT", "ROLE_MANAGE_COMMENTS"})
     ModelAndView index(@ModelAttribute IssueFilter filter, Pageable pageable) {
 
         Page<Issue> issues = issueService.findAll(filter, pageable);

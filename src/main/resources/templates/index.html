@@ -25,7 +25,7 @@
             Bugtracker
         </div>
 
-        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT') || #strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_COMMENTS')}"
              class="col mt-3">
             <a th:href="@{'/issues'}" class="btn btn-primary">
                 <h7 th:text="#{issues}"></h7>
