@@ -40,10 +40,11 @@ public class IssueService {
         return issueRepository.findAllByEnabled(true);
     }
 
-    public Set<Project> findAllProjects() {
+    public Set<Project> findAllEnabledProjects() {
         return findAllEnabled()
                 .stream()
                 .map(Issue::getProject)
+                .filter(Project::isEnabled)
                 .sorted(Comparator.comparing(Project::getName))
                 .collect(Collectors.toCollection(TreeSet::new));
     }
@@ -56,7 +57,6 @@ public class IssueService {
             }
         return set;
     }
-
 
     public Set<Status> findAllStatuses() {
         return findAllEnabled()
