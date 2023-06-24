@@ -31,7 +31,7 @@ public class Person implements Comparable<Person> {
 
     @Column(length = 100)
     @Size(min = 4, max = 100)
-    @Pattern(regexp = "(?=.*\\d)(?=.*[A-Z]).+")
+    @Pattern(regexp = "(?=.*\\d)(?=.*[A-Z]).+", message = "{password.incorrect}")
     private String password;
 
     @Transient
