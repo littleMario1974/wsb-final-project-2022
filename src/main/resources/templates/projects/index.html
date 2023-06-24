@@ -23,14 +23,14 @@
             Bugtracker
         </div>
 
-        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+        <div
                 class="col mt-3">
             <a th:href="@{'/issues'}" class="btn btn-primary">
                 <h7 th:text="#{issues}"></h7>
             </a>
         </div>
 
-        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+        <div
                 class="col mt-3">
             <a th:href="@{'/projects'}" class="btn btn-dark">
                 <h7 th:text="#{projects}"></h7>
@@ -93,7 +93,8 @@
         </div>
 
         <div class="col-2 text-end">
-            <a th:href="@{'/projects/create'}" class="btn btn-secondary">
+            <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+                    th:href="@{'/projects/create'}" class="btn btn-secondary">
                 <h7 th:text="#{new.project}"></h7>
             </a>
         </div>
@@ -120,12 +121,14 @@
             <h7 class="card-header" th:text="#{projects.creator} + ': ' + ${project.creator.getUsername()}"></h7>
             <div class="card-body">
                 <p class="card-text" th:text="${project.getDescription()}"></p>
-                <a th:href="@{'/projects/edit/' + ${project.id}}" class="btn btn-secondary">
+                <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+                        th:href="@{'/projects/edit/' + ${project.id}}" class="btn btn-secondary">
                     <h7 th:text="#{edit}"></h7>
                 </a>
                 </td>
                 <td>
-                    <a th:href="@{'/projects/delete/' + ${project.id}}" class="btn btn-secondary">
+                    <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+                            th:href="@{'/projects/delete/' + ${project.id}}" class="btn btn-secondary">
                         <h7 th:text="#{delete}"></h7>
                     </a>
             </div>
