@@ -22,7 +22,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping
-    @Secured("ROLE_MANAGE_PROJECT")
+    //@Secured("ROLE_MANAGE_PROJECT")
     ModelAndView index(@ModelAttribute ProjectFilter filter, Pageable pageable) {
 
         Page<Project> projects = projectService.findAll(filter, pageable);
