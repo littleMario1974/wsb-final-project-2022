@@ -23,14 +23,14 @@
             Bugtracker
         </div>
 
-        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+        <div
              class="col mt-3">
             <a th:href="@{'/issues'}" class="btn btn-primary">
                 <h7 th:text="#{issues}"></h7>
             </a>
         </div>
 
-        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+        <div
              class="col mt-3">
             <a th:href="@{'/projects'}" class="btn btn-primary">
                 <h7 th:text="#{projects}"></h7>
@@ -177,7 +177,7 @@
                 <h7 th:text="#{save}"></h7>
             </button>
 
-            <a th:href="@{/}" class="btn btn-secondary mt-4">
+            <a th:href="@{/people/}" class="btn btn-secondary mt-4">
                 <h7 th:text="#{cancel}"></h7>
             </a>
 

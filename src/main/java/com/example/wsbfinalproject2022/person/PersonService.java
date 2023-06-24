@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -99,6 +100,31 @@ public class PersonService {
                 .peek(issue -> issue.setAssignee(null))
                 .forEach(issue -> issueService.save(issue,issue.getCreator().getUsername()));
         daoPerson.setEnabled(false);
+        String randomPassword = RandomPasswordGenerator.generateRandomString(RandomPasswordGenerator.PASSWORD_LENGTH);
+        daoPerson.setPassword(randomPassword);
         personRepository.save(daoPerson);
+    }
+
+    public static class RandomPasswordGenerator {
+        private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private static final int PASSWORD_LENGTH = 60;
+
+        public static void main(String[] args) {
+            String randomPassword = generateRandomString(PASSWORD_LENGTH);
+            System.out.println(randomPassword);
+        }
+
+        public static String generateRandomString(int length) {
+            SecureRandom secureRandom = new SecureRandom();
+            StringBuilder sb = new StringBuilder(length);
+
+            for (int i = 0; i < length; i++) {
+                int randomIndex = secureRandom.nextInt(CHARACTERS.length());
+                char randomChar = CHARACTERS.charAt(randomIndex);
+                sb.append(randomChar);
+            }
+
+            return sb.toString();
+        }
     }
 }

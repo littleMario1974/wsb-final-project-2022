@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +36,7 @@ public class IssueController {
     }
 
     @GetMapping
-    @Secured({"ROLE_MANAGE_PROJECT", "ROLE_MANAGE_COMMENTS"})
+    //@Secured({"ROLE_MANAGE_PROJECT", "ROLE_MANAGE_COMMENTS"})
     ModelAndView index(@ModelAttribute IssueFilter filter, Pageable pageable) {
 
         Page<Issue> issues = issueService.findAll(filter, pageable);
@@ -47,13 +46,13 @@ public class IssueController {
         modelAndView.addObject("filter", filter); // ++++++++++++++++++
         modelAndView.addObject("assignees", issueService.findAllAssignees());// wyświetla w liście rozwijanej index.html wszystkich wykonawców
         modelAndView.addObject("statuses", issueService.findAllStatuses());
-        modelAndView.addObject("projects", issueService.findAllProjects()); // przekazuje z powrotem do widoku
+        modelAndView.addObject("projects", issueService.findAllEnabledProjects()); // przekazuje z powrotem do widoku
 
         return modelAndView;
     }
 
     @GetMapping("/create")
-    @Secured("ROLE_MANAGE_PROJECT")
+    //@Secured("ROLE_MANAGE_PROJECT")
     ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("issues/create");
         Issue issue = new Issue();
@@ -65,7 +64,7 @@ public class IssueController {
     }
 
     @GetMapping("/edit/{id}")
-    @Secured("ROLE_MANAGE_PROJECT")
+    //@Secured("ROLE_MANAGE_PROJECT")
     ModelAndView edit(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("issues/create");
 
@@ -79,7 +78,7 @@ public class IssueController {
     }
 
     @PostMapping("/save")
-    @Secured("ROLE_MANAGE_PROJECT")
+    //@Secured("ROLE_MANAGE_PROJECT")
     ModelAndView save(@ModelAttribute @Valid Issue issue,
                       BindingResult bindingResult, Principal principal) {
 
@@ -131,7 +130,7 @@ public class IssueController {
 
 
     @GetMapping("/delete/{id}")
-    @Secured("ROLE_MANAGE_PROJECT")
+    //@Secured("ROLE_MANAGE_PROJECT")
     ModelAndView delete(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("issues/delete");
 
@@ -142,7 +141,7 @@ public class IssueController {
     }
 
     @PostMapping("/delete")
-    @Secured("ROLE_MANAGE_PROJECT")
+    //@Secured("ROLE_MANAGE_PROJECT")
     String delete(@ModelAttribute Issue issue) {
         issue.setEnabled(false);
         issueRepository.save(issue);

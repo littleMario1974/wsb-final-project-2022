@@ -41,4 +41,8 @@ public class Project implements Comparable<Project> {
     public int compareTo(Project other) {
         return this.name.compareTo(other.name);
     }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
 }

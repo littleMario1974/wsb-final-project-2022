@@ -23,7 +23,7 @@
             Bugtracker
         </div>
 
-        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT') || #strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_COMMENTS')}"
+        <div
              class="col mt-3">
             <a th:href="@{'/issues'}" class="btn btn-dark">
                 <h7 th:text="#{issues}"></h7>
@@ -31,7 +31,7 @@
         </div>
 
 
-        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+        <div
              class="col mt-3">
             <a th:href="@{'/projects'}" class="btn btn-primary">
                 <h7 th:text="#{projects}"></h7>
@@ -117,7 +117,7 @@
         </div>
 
         <div class="col-2 text-end">
-            <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+            <a
                     th:href="@{'/issues/create'}" class="btn btn-secondary">
                 <h7 th:text="#{new.issue}"></h7>
             </a>
@@ -146,13 +146,13 @@
                 th:text="#{issues.assignee} + ': ' + #{not.assigned} + ', ' + #{project} + ': ' + ${issue.project.name}"></h7>
             <div class="card-body">
                 <p class="card-text" th:text="${issue.getDescription()}"></p>
-                <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+                <a
                    th:href="@{'/issues/edit/' + ${issue.id}}" class="btn btn-secondary">
                     <h7 th:text="#{edit}"></h7>
                 </a>
                 </td>
                 <td>
-                    <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+                    <a
                             th:href="@{'/issues/delete/' + ${issue.id}}" class="btn btn-secondary">
                         <h7 th:text="#{delete}"></h7>
                     </a>

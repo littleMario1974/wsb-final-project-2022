@@ -22,14 +22,14 @@
             Bugtracker
         </div>
 
-        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+        <div
              class="col mt-3">
             <a th:href="@{'/issues'}" class="btn btn-dark">
                 <h7 th:text="#{issues}"></h7>
             </a>
         </div>
 
-        <div th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_PROJECT')}"
+        <div
              class="col mt-3">
             <a th:href="@{'/projects'}" class="btn btn-primary">
                 <h7 th:text="#{projects}"></h7>
@@ -69,7 +69,7 @@
         <input th:if="${issue.id != null}" type="hidden" th:field="*{project.id}">
 
 
-        <div th:if="${issue.id == null}" class="mb-3">
+        <div class="mb-3">
             <label for="project" class="form-label">
                 <h7 th:text="#{project}"></h7>
             </label>
