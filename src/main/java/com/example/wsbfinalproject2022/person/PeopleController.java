@@ -96,7 +96,7 @@ public class PeopleController {
         }
         personService.savePerson(person);
 
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/people/");
 
         return modelAndView;
     }
