@@ -46,8 +46,8 @@ public class PersonService {
         personRepository.save(person);
     }*/
 
-    public Person findByName(String name){
-        return personRepository.findByUsernameAndEnabled(name,true)
+    public Person findByName(String name) {
+        return personRepository.findByUsernameAndEnabled(name, true)
                 .map(filterPassword())
                 .orElseThrow();
     }
@@ -98,7 +98,7 @@ public class PersonService {
         assignedIssues
                 .stream()
                 .peek(issue -> issue.setAssignee(null))
-                .forEach(issue -> issueService.save(issue,issue.getCreator().getUsername()));
+                .forEach(issue -> issueService.save(issue, issue.getCreator().getUsername()));
         daoPerson.setEnabled(false);
         String randomPassword = RandomPasswordGenerator.generateRandomString(RandomPasswordGenerator.PASSWORD_LENGTH);
         daoPerson.setPassword(randomPassword);
@@ -111,7 +111,7 @@ public class PersonService {
 
         public static void main(String[] args) {
             String randomPassword = generateRandomString(PASSWORD_LENGTH);
-            System.out.println(randomPassword);
+
         }
 
         public static String generateRandomString(int length) {
