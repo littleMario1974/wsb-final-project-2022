@@ -97,7 +97,7 @@
                 <h7 th:text="#{edit}"></h7>
             </a>
 
-            <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_USERS')}"
+            <a th:if="${#strings.contains(#authentication.getPrincipal().authorities, 'ROLE_MANAGE_USERS') && #authentication.getPrincipal().username != person.username} "
                th:href="@{'/people/delete/' + ${person.id}}" class="btn btn-secondary">
                 <h7 th:text="#{delete}"></h7>
             </a>
